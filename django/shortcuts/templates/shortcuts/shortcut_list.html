@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shortcuts/css/style.css' %}">
+    <div class="row">
+        <div class="col">
+            <h1>Shortcuts</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col-10">Title</div>
+                <div class="col-auto">View</div>
+                <div class="col-auto">Edit</div>
+                <!-- <div class="col-auto">Delete</div> -->
+            </div>
+            {% for shortcut in object_list %}
+            <div class="row list-item">
+                <div class="col-10">{{ shortcut.title_fi }}</div>
+                <div class="col-auto"><a href="{% url "shortcut_view" shortcut.id %}">view</a></div>
+                <div class="col-auto"><a href="{% url "shortcut_edit" shortcut.id %}">edit</a></div>
+                <!-- <div class="col-auto"><a href="{% url "shortcut_delete" shortcut.id %}">delete</a></div> -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'shortcuts/css/style.css' %}">
+
+    <div class="row">
+        <div class="col">
+            <h1>Shortcut Edit</h1>
+            <div class="row">
+                <div class="col-2">
+                    Choose language:
+                </div>
+                <div class="col-1">
+                    <!-- {{form.lang}} -->
+                    <select  class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
+                        <option value="fi">Fi</option>
+                        <option value="sv">Sv</option>
+                        <option value="en">En</option>>
+                    </select>
+                </div>
+            </div>
+            
+            <script>
+                function changeLang(val) {
+                    var fi_editor = document.getElementById("fi");
+                    var sv_editor= document.getElementById("sv");
+                    var en_editor = document.getElementById("en");
+            
+                    var fiTitle = '{{ form.title_fi }}';
+                    var svTitle = '{{ form.title_sv }}';
+                    var enTitle = '{{ form.title_en }}';
+
+                    switch (val) {
+                        case 'sv': {
+                            fi_editor.style.display = "none";
+                            sv_editor.style.display = "block";
+                            en_editor.style.display = "none";
+                            document.getElementById("title").innerHTML = svTitle
+                            break;
+                        }
+                        case 'en': {
+                            fi_editor.style.display = "none";
+                            sv_editor.style.display = "none";
+                            en_editor.style.display = "block";
+                            document.getElementById("title").innerHTML = enTitle
+                            break;
+                        }
+                        default: {
+                            fi_editor.style.display = "block";
+                            sv_editor.style.display = "none";
+                            en_editor.style.display = "none";
+                            document.getElementById("title").innerHTML = fiTitle
+                        }
+                    }
+                }
+            </script>
+            
+            <form method="post">{% csrf_token %}
+                {{ form.media }}
+                {{ form.non_field_errors }}
+                
+                <div class="row section">
+                    <div class="col-12">
+                        {{ form.title_fi.errors }}
+                        <label class="font-weight-bold">Title</label>
+                        <div id="title">{{ form.title_fi }}</div>
+                    </div>
+                </div>
+                <div class="row section">
+                    <div class="col-12">
+                        <div id="fi">
+                            {{ form.content_fi.errors }}
+                            <label>Content</label>
+                            {{ form.content_fi }}
+                        </div>
+                        <div id="sv" style="display: none;">
+                            {{ form.content_sv.errors }}
+                            <label>Content</label>
+                            {{ form.content_sv }}
+                        </div>
+                        <div id="en" style="display: none;">
+                            {{ form.content_en.errors }}
+                            <label>Content</label>
+                            {{ form.content_en }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image upload -->
+                <div class="row section">
+                    <div class="col-2">
+                        <img class="preview" src="{{ form.instance.image.url }}">
+                    </div>
+                    <div class="col-10">
+                        {{ form.image }}
+                    </div>
+                </div>
+
+                <!-- Target link -->
+                <div class="row section">
+                    <div class="col-12">
+                        {{ form.link.errors }}
+                        <label class="strong">Link</label>
+                        {{ form.link }}
+                    </div>
+                </div>
+                <div class="row section">
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit" value="Submit">Update</button>
+                        <a href="/pages/list"><button class="btn btn-secondary" value="Cancel">Cancel</button></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

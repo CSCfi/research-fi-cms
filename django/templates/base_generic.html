@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {% block title %}<title>Research.fi CMS</title>{% endblock %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/global.css' %}" />   
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Research.fi CMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        {% if user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li {% if request.path == '/' %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
+                <a class="nav-link" href="/">Home</a>
+                </li>
+                <li {% if "/pages/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
+                <a class="nav-link" href="/pages/">Pages</a>
+                </li>
+                <li {% if "/shortcuts/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
+                <a class="nav-link" href="/shortcuts/">Shortcuts</a>
+                </li>
+            </ul>
+            <a href="/accounts/logout">
+                <button class="btn btn-secondary" type="submit">Log out</button>
+            </a>
+        </div>
+        {% endif %}
+    </nav>
+    <div class="container pt-4">
+        {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+        {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,41 @@
+.section {
+    padding: 1rem 0;
+}
+
+.shortcut h2 {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    font-weight: 500;
+}
+
+.cover-img {
+    height: 150px;
+    width: 100%;
+}
+
+.cover-img img {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    transition: .2s linear;
+}
+
+.caption {
+    background: #e8e8f5;
+    padding: 10px;
+}
+
+.shortcut:hover {
+    cursor: pointer;
+}
+
+.shortcut:hover .caption {
+    background: #4546b9;
+    color: #fff;
+}
+
+img.preview {
+    max-width: 167px;
+    height: auto;
+}
