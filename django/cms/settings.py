@@ -26,7 +26,7 @@ SECRET_KEY = '+9+_l^j#s^)^@stkk94k-p=2obgnf_!a&%xg-3(px&*9%ppf7n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.rahtiapp.fi']
 
 
 # Application definition
