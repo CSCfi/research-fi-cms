@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: cms
+  labels:
+    app: cms-app
+    template: cms
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: cms
+    labels:
+      app: cms-app
+    annotations:
+      description: Content management system for portal
+  spec:
+    ports:
+      - name: cms
+        port: 8080
+        targetPort: 8080
+    selector:
+      depcfg: cms
+
+# ImageStream for devel
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: cms-image
+    labels:
+      app: cms-app
+
+# BuildConfig using source to image (s2i) strategy
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: cms-build
+    labels:
+      app: cms-app
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: devel
+      contextDir: django
+    strategy:
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: centos/python-36-centos7
+        env:
+          - name: ENABLE_PIPENV
+            value: "true"
+          - name: APP_HOME
+            value: "cms"
+          - name: APP_MODULE
+            value: "cms.wsgi:application"
+          - name: DISABLE_SETUP_PY_PROCESSING
+            value: "true"
+          - name: DISABLE_COLLECTSTATIC
+            value: "true"
+          - name: DISABLE_MIGRATE
+            value: "true"
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cms:latest
+    successfulBuildsHistoryLimit: 4 
+    failedBuildsHistoryLimit: 4
+
+# Deployment config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: cms-deployment
+    labels:
+     app: cms-app
+  spec:
+    selector:
+      app: cms-app
+      depcfg: cms
+    template:
+      metadata:
+        labels:
+          app: cms-app
+          depcfg: cms
+      spec:
+        containers:
+          - name: cms-container
+            image: ts/cms-image
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8001
+                protocol: TCP
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - cms-container
+        from:
+          kind: ImageStreamTag
+          name: cms-image:latest
+    strategy:
+      type: Rolling
