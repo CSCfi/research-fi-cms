@@ -53,8 +53,6 @@ objects:
         env:
           - name: ENABLE_PIPENV
             value: "true"
-          - name: APP_HOME
-            value: "cms"
           - name: APP_MODULE
             value: "cms.wsgi:application"
           - name: DISABLE_SETUP_PY_PROCESSING
