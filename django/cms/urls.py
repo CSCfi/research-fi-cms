@@ -20,10 +20,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('base.urls')),
+    path('', include('content.urls')),
     path('apis/v1/', include('apis.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('pages/', include('pages.urls')),
-    path('shortcuts/', include('shortcuts.urls')),
+    #path('pages/', include('pages.urls')),
+    #path('shortcuts/', include('shortcuts.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
