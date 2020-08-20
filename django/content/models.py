@@ -19,7 +19,7 @@ class Page(models.Model):
     content_fi = RichTextUploadingField(blank=True)
     content_sv = RichTextUploadingField(blank=True)
     content_en = RichTextUploadingField(blank=True)
-
+    placement_id = models.CharField(max_length=64, blank=False, null=False)
 
     def __str__(self):
         return self.title_fi
@@ -47,6 +47,7 @@ class Shortcut(models.Model):
     content_en = models.TextField(default='Enter content')
     image = models.ImageField(upload_to='images/', blank=True)
     link = models.URLField(max_length=500, blank=True)
+    placement_id = models.CharField(max_length=64, blank=False, null=False)
 
     def __str__(self):
         return self.title_fi

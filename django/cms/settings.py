@@ -26,7 +26,7 @@ SECRET_KEY = '+9+_l^j#s^)^@stkk94k-p=2obgnf_!a&%xg-3(px&*9%ppf7n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.rahtiapp.fi']
+ALLOWED_HOSTS = ['localhost', '.rahtiapp.fi']
 
 
 # Application definition
@@ -167,3 +167,10 @@ MEDIA_ROOT = 'media/'
 #Login settings
 
 LOGIN_REDIRECT_URL = '/'
+
+# Import local settings, if defined.
+# Local settings can be used to overwrite values in development and testing environments.
+try:
+    from .local_settings import *
+except ImportError:
+    pass
