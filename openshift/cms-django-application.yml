@@ -43,7 +43,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: devel
+        ref: CSCTTV-1578 #devel
       contextDir: django
     strategy:
       sourceStrategy:
@@ -88,6 +88,13 @@ objects:
             ports:
               - containerPort: 8001
                 protocol: TCP
+            volumeMounts:
+              - mountPath: "/data"
+                name: "pvol"
+        volumes:
+          - name: "pvol"
+            persistentVolumeClaim:
+              claimName: "cms-media-volume"
     replicas: 1
     triggers:
     - type: ConfigChange
