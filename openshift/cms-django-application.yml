@@ -89,12 +89,12 @@ objects:
               - containerPort: 8001
                 protocol: TCP
             volumeMounts:
-              - mountPath: "/data"
-                name: "pvol"
+              - mountPath: /data
+                name: pvol
         volumes:
-          - name: "pvol"
+          - name: pvol
             persistentVolumeClaim:
-              claimName: "cms-media-volume"
+              claimName: cms-media-volume
     replicas: 1
     triggers:
     - type: ConfigChange
