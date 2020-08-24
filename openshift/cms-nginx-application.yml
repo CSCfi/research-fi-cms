@@ -6,66 +6,57 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: cms-django
   labels:
-    app: cms-django-app
-    template: cms-django
+    app: cms-nginx-app
+    template: cms-nginx
+  name: cms-nginx
 objects:
 
 # Service
 - apiVersion: v1
   kind: Service
   metadata:
-    name: cms-django
+    name: cms-nginx
     labels:
-      app: cms-django-app
+      app: cms-nginx-app
     annotations:
-      description: Django application for CMS
+      description: Nginx server for CMS media
   spec:
     ports:
-      - name: cms-django
+      - name: nginx
         port: 8080
         targetPort: 8080
     selector:
-      depcfg: cms-django
+      depcfg: cms-nginx
 
-# ImageStream for devel
+# ImageStream
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: cms-django
+    name: cms-nginx
     labels:
-      app: cms-django-app
+      app: cms-nginx-app
 
-# BuildConfig using source to image (s2i) strategy
+# BuildConfig using Docker build strategy
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: cms-build
+    name: cms-nginx
     labels:
-      app: cms-django-app
+      app: cms-nginx-app
   spec:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
         ref: CSCTTV-1578 #devel
-      contextDir: django
+      contextDir: .
     strategy:
-      sourceStrategy:
-        from:
-          kind: DockerImage
-          name: centos/python-36-centos7
-        env:
-          - name: ENABLE_PIPENV
-            value: "true"
-          - name: APP_MODULE
-            value: "cms.wsgi:application"
-          - name: DISABLE_SETUP_PY_PROCESSING
-            value: "true"
+      dockerStrategy:
+        dockerfilePath: nginx/Dockerfile
     output:
       to:
         kind: ImageStreamTag
-        name: cms-django:latest
+        name: cms-nginx:latest
     successfulBuildsHistoryLimit: 4 
     failedBuildsHistoryLimit: 4
 
@@ -73,25 +64,25 @@ objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    name: cms-deployment
+    name: cms-nginx
     labels:
-     app: cms-django-app
+      app: cms-nginx-app
   spec:
     selector:
-      app: cms-django-app
-      depcfg: cms-django
+      app: cms-nginx-app
+      depcfg: cms-nginx
     template:
       metadata:
         labels:
-          app: cms-django-app
-          depcfg: cms-django
+          app: cms-nginx-app
+          depcfg: cms-nginx
       spec:
         containers:
-          - name: cms-django
-            image: ts/cms-django
+          - name: cms-nginx
+            image: ts/cms-nginx
             imagePullPolicy: Always
             ports:
-              - containerPort: 8001
+              - containerPort: 8080
                 protocol: TCP
             volumeMounts:
               - mountPath: /cmsmedia
@@ -107,9 +98,9 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - cms-django
+        - cms-nginx
         from:
           kind: ImageStreamTag
-          name: cms-django:latest
+          name: cms-nginx:latest
     strategy:
       type: Rolling
