@@ -128,7 +128,7 @@ objects:
                 valueFrom:
                   secretKeyRef:
                     name: cms-django-secret
-                    key: django_end_media_url
+                    key: django_env_media_url
             volumeMounts:
               - mountPath: /cmsmedia
                 name: cmsmedia
