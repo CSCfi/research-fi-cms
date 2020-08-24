@@ -49,10 +49,10 @@ objects:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
         ref: CSCTTV-1578 #devel
-      contextDir: .
+      contextDir: nginx
     strategy:
       dockerStrategy:
-        dockerfilePath: nginx/Dockerfile
+        dockerfilePath: Dockerfile
     output:
       to:
         kind: ImageStreamTag
