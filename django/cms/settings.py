@@ -160,7 +160,7 @@ STATICFILES_DIRS = (
 #CKEditor settings
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-MEDIA_URL = '/media/' 
+MEDIA_URL = 'http://cms-nginx-ts.rahtiapp.fi/' 
 MEDIA_ROOT = '/cmsmedia/'
 
 
