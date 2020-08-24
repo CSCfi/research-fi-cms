@@ -94,6 +94,11 @@ objects:
               - containerPort: 8001
                 protocol: TCP
             env:
+              - name: DJANGO_ENV_DEBUG
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_debug
               - name: DJANGO_ENV_SECRET_KEY
                 valueFrom:
                   secretKeyRef:
