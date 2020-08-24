@@ -41,7 +41,7 @@ objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: cms-build
+    name: cms-django
     labels:
       app: cms-django-app
   spec:
