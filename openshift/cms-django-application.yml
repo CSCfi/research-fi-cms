@@ -93,6 +93,42 @@ objects:
             ports:
               - containerPort: 8001
                 protocol: TCP
+            env:
+              - name: DJANGO_ENV_SECRET_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_secret_key
+              - name: DJANGO_ENV_DATABASE_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_database_host
+              - name: DJANGO_ENV_DATABASE_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_database_port
+              - name: DJANGO_ENV_DATABASE_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_database_name
+              - name: DJANGO_ENV_DATABASE_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_database_user
+              - name: DJANGO_ENV_DATABASE_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_database_password
+              - name: DJANGO_ENV_MEDIA_URL
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_end_media_url
             volumeMounts:
               - mountPath: /cmsmedia
                 name: cmsmedia

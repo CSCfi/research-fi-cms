@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+9+_l^j#s^)^@stkk94k-p=2obgnf_!a&%xg-3(px&*9%ppf7n'
+SECRET_KEY = os.environ.get('DJANGO_ENV_SECRET_KEY'),
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '.rahtiapp.fi']
+ALLOWED_HOSTS = ['localhost', '.rahtiapp.fi', '.csc.fi']
 
 
 # Application definition
@@ -104,11 +104,11 @@ DATABASES = {
     ### PostgreSQL
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'cms-postgresql',
-        'PORT': 5432,
-        'NAME': 'djangocms',
-        'USER': 'user123',
-        'PASSWORD': 'password123',
+        'HOST': os.environ.get('DJANGO_ENV_DATABASE_HOST'),
+        'PORT': os.environ.get('DJANGO_ENV_DATABASE_PORT'),
+        'NAME': os.environ.get('DJANGO_ENV_DATABASE_NAME'),
+        'USER': os.environ.get('DJANGO_ENV_DATABASE_USER'),
+        'PASSWORD': os.environ.get('DJANGO_ENV_DATABASE_PASSWORD'),
     }
 }
 
@@ -160,7 +160,7 @@ STATICFILES_DIRS = (
 #CKEditor settings
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-MEDIA_URL = 'http://cms-nginx-ts.rahtiapp.fi/' 
+MEDIA_URL = os.environ.get('DJANGO_ENV_MEDIA_URL')
 MEDIA_ROOT = '/cmsmedia/'
 
 
