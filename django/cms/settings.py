@@ -161,7 +161,7 @@ STATICFILES_DIRS = (
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 MEDIA_URL = '/media/' 
-MEDIA_ROOT = 'cmsmedia/'
+MEDIA_ROOT = '/cmsmedia/'
 
 
 #Login settings
