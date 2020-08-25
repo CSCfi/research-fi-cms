@@ -154,6 +154,7 @@ STATIC_ROOT = '/cmsvolume/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'base/static/'),
+    os.path.join(BASE_DIR, 'content/static/'),
 )
 
 #CKEditor settings
