@@ -85,12 +85,12 @@ objects:
               - containerPort: 8080
                 protocol: TCP
             volumeMounts:
-              - mountPath: /cmsmedia
-                name: cmsmedia
+              - mountPath: /cmsvolume
+                name: cmsvolume
         volumes:
-          - name: cmsmedia
+          - name: cmsvolume
             persistentVolumeClaim:
-              claimName: cms-media-volume
+              claimName: cms-volume
     replicas: 1
     triggers:
     - type: ConfigChange

@@ -149,9 +149,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = "static/"
-
-STATIC_ROOT = "static/"
+STATIC_URL = os.environ.get('DJANGO_ENV_STATIC_URL')
+STATIC_ROOT = '/cmsvolume/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'base/static/'),
@@ -161,7 +160,7 @@ STATICFILES_DIRS = (
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 MEDIA_URL = os.environ.get('DJANGO_ENV_MEDIA_URL')
-MEDIA_ROOT = '/cmsmedia/'
+MEDIA_ROOT = '/cmsvolume/media/'
 
 
 #Login settings

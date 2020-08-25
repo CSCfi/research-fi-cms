@@ -134,13 +134,18 @@ objects:
                   secretKeyRef:
                     name: cms-django-secret
                     key: django_env_media_url
+              - name: DJANGO_ENV_STATIC_URL
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_static_url
             volumeMounts:
-              - mountPath: /cmsmedia
-                name: cmsmedia
+              - mountPath: /cmsvolume
+                name: cmsvolume
         volumes:
-          - name: cmsmedia
+          - name: cmsvolume
             persistentVolumeClaim:
-              claimName: cms-media-volume
+              claimName: cms-volume
     replicas: 1
     triggers:
     - type: ConfigChange
