@@ -39,7 +39,7 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-def page_update(request, pk, template_name='pages/page_update.html'):
+def page_update(request, pk, template_name='page_update.html'):
     page = get_object_or_404(Page, pk=pk)
     form = PageForm(request.POST or None, instance=page)
     if form.is_valid():
@@ -82,7 +82,7 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-def shortcut_update(request, pk, template_name='shortcuts/shortcut_update.html'):
+def shortcut_update(request, pk, template_name='shortcut_update.html'):
     shortcut = get_object_or_404(Shortcut, pk=pk)
     form = ShortcutForm(request.POST or None, instance=shortcut)
     if form.is_valid():
