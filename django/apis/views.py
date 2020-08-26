@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from content.models import Page, Shortcut
-from content.serializers import PageSerializer, ShortcutSerializer
+from contentapp.models import Page, Shortcut
+from contentapp.serializers import PageSerializer, ShortcutSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):

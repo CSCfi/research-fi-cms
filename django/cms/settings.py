@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apis.apps.ApisConfig',
-    'content',
+    'contentapp',
     'livereload',
     'bootstrap4',
     'ckeditor',
@@ -154,7 +154,7 @@ STATIC_ROOT = '/cmsvolume/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'base/static/'),
-    os.path.join(BASE_DIR, 'content/static/'),
+    os.path.join(BASE_DIR, 'contentapp/static/'),
 )
 
 #CKEditor settings
