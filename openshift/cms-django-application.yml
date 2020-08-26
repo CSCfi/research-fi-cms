@@ -48,7 +48,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: CSCTTV-1578 #devel
+        ref: devel
       contextDir: django
     strategy:
       sourceStrategy:
@@ -88,7 +88,7 @@ objects:
       spec:
         containers:
           - name: cms-django
-            image: ts/cms-django
+            image: researchfi/cms-django
             imagePullPolicy: Always
             ports:
               - containerPort: 8001

@@ -48,7 +48,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: CSCTTV-1578 #devel
+        ref: devel
       contextDir: nginx
     strategy:
       dockerStrategy:
@@ -79,7 +79,7 @@ objects:
       spec:
         containers:
           - name: cms-nginx
-            image: ts/cms-nginx
+            image: researchfi/cms-nginx
             imagePullPolicy: Always
             ports:
               - containerPort: 8080
