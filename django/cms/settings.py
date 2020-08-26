@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+9+_l^j#s^)^@stkk94k-p=2obgnf_!a&%xg-3(px&*9%ppf7n'
+SECRET_KEY = os.environ.get('DJANGO_ENV_SECRET_KEY'),
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DJANGO_ENV_DEBUG', False)))
 
-ALLOWED_HOSTS = ['localhost', '.rahtiapp.fi']
+ALLOWED_HOSTS = ['localhost', '.rahtiapp.fi', '.csc.fi']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apis.apps.ApisConfig',
-    'content',
+    'contentapp',
     'livereload',
     'bootstrap4',
     'ckeditor',
@@ -104,11 +104,11 @@ DATABASES = {
     ### PostgreSQL
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'cms-postgresql',
-        'PORT': 5432,
-        'NAME': 'djangocms',
-        'USER': 'user123',
-        'PASSWORD': 'password123',
+        'HOST': os.environ.get('DJANGO_ENV_DATABASE_HOST'),
+        'PORT': os.environ.get('DJANGO_ENV_DATABASE_PORT'),
+        'NAME': os.environ.get('DJANGO_ENV_DATABASE_NAME'),
+        'USER': os.environ.get('DJANGO_ENV_DATABASE_USER'),
+        'PASSWORD': os.environ.get('DJANGO_ENV_DATABASE_PASSWORD'),
     }
 }
 
@@ -149,19 +149,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = "static/"
-
-STATIC_ROOT = "static/"
+STATIC_URL = os.environ.get('DJANGO_ENV_STATIC_URL')
+STATIC_ROOT = '/cmsvolume/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'base/static/'),
+    os.path.join(BASE_DIR, 'contentapp/static/'),
 )
 
 #CKEditor settings
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-MEDIA_URL = '/media/' 
-MEDIA_ROOT = 'media/'
+MEDIA_URL = os.environ.get('DJANGO_ENV_MEDIA_URL')
+MEDIA_ROOT = '/cmsvolume/media/'
 
 
 #Login settings

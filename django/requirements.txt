@@ -5,6 +5,7 @@ django-bootstrap4==2.2.0
 django-ckeditor==5.9.0
 django-js-asset==1.2.2
 djangorestframework==3.11.1
+gunicorn==20.0.4
 livereload==2.6.2
 Pillow==7.2.0
 psycopg2-binary==2.8.5

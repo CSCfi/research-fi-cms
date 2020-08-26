@@ -1,0 +1,106 @@
+# Copyright 2020 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+apiVersion: v1
+kind: Template
+metadata:
+  labels:
+    app: cms-nginx-app
+    template: cms-nginx
+  name: cms-nginx
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: cms-nginx
+    labels:
+      app: cms-nginx-app
+    annotations:
+      description: Nginx server for CMS media
+  spec:
+    ports:
+      - name: nginx
+        port: 8080
+        targetPort: 8080
+    selector:
+      depcfg: cms-nginx
+
+# ImageStream
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: cms-nginx
+    labels:
+      app: cms-nginx-app
+
+# BuildConfig using Docker build strategy
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: cms-nginx
+    labels:
+      app: cms-nginx-app
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: devel
+      contextDir: nginx
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cms-nginx:latest
+    successfulBuildsHistoryLimit: 4 
+    failedBuildsHistoryLimit: 4
+
+# Deployment config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: cms-nginx
+    labels:
+      app: cms-nginx-app
+  spec:
+    selector:
+      app: cms-nginx-app
+      depcfg: cms-nginx
+    template:
+      metadata:
+        labels:
+          app: cms-nginx-app
+          depcfg: cms-nginx
+      spec:
+        containers:
+          - name: cms-nginx
+            image: researchfi/cms-nginx
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            volumeMounts:
+              - mountPath: /cmsvolume
+                name: cmsvolume
+        volumes:
+          - name: cmsvolume
+            persistentVolumeClaim:
+              claimName: cms-volume
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - cms-nginx
+        from:
+          kind: ImageStreamTag
+          name: cms-nginx:latest
+    strategy:
+      type: Rolling
