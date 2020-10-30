@@ -27,6 +27,9 @@
                 <li {% if "/shortcuts/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
                 <a class="nav-link" href="/shortcuts/">Shortcuts</a>
                 </li>
+                <li {% if "/figures/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
+                <a class="nav-link" href="/figures/">Figures</a>
+                </li>
             </ul>
             <a href="/accounts/logout">
                 <button class="btn btn-secondary" type="submit">Log out</button>
