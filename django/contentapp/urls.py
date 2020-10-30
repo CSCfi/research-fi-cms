@@ -11,4 +11,7 @@ urlpatterns = [
     path('shortcuts/view/<int:pk>', views.ShortcutView.as_view(), name='shortcut_view'),
     path('shortcuts/edit/<int:pk>', views.shortcut_update, name='shortcut_edit'),
     path('shortcuts/delete/<int:pk>', views.ShortcutDelete.as_view(), name='shortcut_delete'),
+    path('figures/', views.SingleFigureList.as_view(), name='figure_list'),
+    path('figures/view/<int:pk>', views.SingleFigureView.as_view(), name='figure_view'),
+    path('figures/edit/<int:pk>', views.figure_update, name='figure_edit'),
 ]
