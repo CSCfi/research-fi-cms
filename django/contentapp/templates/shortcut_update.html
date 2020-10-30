@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'content/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'contentApp/css/style.css' %}">
 
     <div class="row">
         <div class="col">
@@ -36,63 +36,104 @@
                             fi_editor.style.display = "none";
                             sv_editor.style.display = "block";
                             en_editor.style.display = "none";
-                            document.getElementById("title").innerHTML = svTitle
+                            // document.getElementById("title").innerHTML = svTitle
                             break;
                         }
                         case 'en': {
                             fi_editor.style.display = "none";
                             sv_editor.style.display = "none";
                             en_editor.style.display = "block";
-                            document.getElementById("title").innerHTML = enTitle
+                            // document.getElementById("title").innerHTML = enTitle
                             break;
                         }
                         default: {
                             fi_editor.style.display = "block";
                             sv_editor.style.display = "none";
                             en_editor.style.display = "none";
-                            document.getElementById("title").innerHTML = fiTitle
+                            // document.getElementById("title").innerHTML = fiTitle
                         }
                     }
                 }
             </script>
             
-            <form method="post">{% csrf_token %}
+            <form method="post" enctype="multipart/form-data">{% csrf_token %}
                 {{ form.media }}
                 {{ form.non_field_errors }}
                 
                 <div class="row section">
-                    <div class="col-12">
-                        {{ form.title_fi.errors }}
-                        <label class="font-weight-bold">Title</label>
-                        <div id="title">{{ form.title_fi }}</div>
+                    <div class="col-2">
+                        Choose position:
+                    </div>
+                    <div class="col-1">
+                        {{ form.placement_id }}
                     </div>
                 </div>
-                <div class="row section">
-                    <div class="col-12">
-                        <div id="fi">
-                            {{ form.content_fi.errors }}
-                            <label>Content</label>
-                            {{ form.content_fi }}
+
+                <!-- Finnish form elements -->
+                <div id="fi">
+                    <div class="row section">
+                        <div class="col-12">
+                            {{ form.title_fi.errors }}
+                            <label class="font-weight-bold">Title</label>
+                            <div id="title">{{ form.title_fi }}</div>
                         </div>
-                        <div id="sv" style="display: none;">
+                    </div>
+                    <div class="row section">
+                        <div class="col-12">
+                            <div id="fi">
+                                {{ form.content_fi.errors }}
+                                <label>Content</label>
+                                {{ form.content_fi }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sv" style="display: none;">
+                    <div class="row section">
+                        <div class="col-12">
+                            {{ form.title_sv.errors }}
+                            <label class="font-weight-bold">Title</label>
+                            <div id="title">{{ form.title_sv }}</div>
+                        </div>
+                    </div>
+                    <div class="row section">
+                        <div class="col-12">
                             {{ form.content_sv.errors }}
                             <label>Content</label>
                             {{ form.content_sv }}
                         </div>
-                        <div id="en" style="display: none;">
-                            {{ form.content_en.errors }}
-                            <label>Content</label>
-                            {{ form.content_en }}
+                    </div>
+                </div>
+
+                <div id="en" style="display: none;">
+                    <div class="row section">
+                        <div class="col-12">
+                            {{ form.title_en.errors }}
+                            <label class="font-weight-bold">Title</label>
+                            <div id="title">{{ form.title_en }}</div>
+                        </div>
+                    </div>
+                    <div class="row section">
+                        <div class="col-12">
+                            <div id="en">
+                                {{ form.content_en.errors }}
+                                <label>Content</label>
+                                {{ form.content_en }}
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Image upload -->
                 <div class="row section">
-                    <div class="col-2">
-                        <img class="preview" src="{{ form.instance.image.url }}">
-                    </div>
+                    {% if form.instance.image %}
+                        <div class="col-2">
+                            <img class="preview" src="{{ form.instance.image.url }}">
+                        </div>
+                    {% endif %}
                     <div class="col-10">
+                        {{ form.image.errors }}
                         {{ form.image }}
                     </div>
                 </div>
