@@ -4,10 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Page, Shortcut
-from .forms import PageForm, ShortcutForm
+from .models import Page, Shortcut, SingleFigure, Figure
+from .forms import PageForm, ShortcutForm, SingleFigureForm
 from rest_framework import viewsets
-from .serializers import PageSerializer, ShortcutSerializer
+from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
 
 class PageList(LoginRequiredMixin, ListView):
     model = Page
@@ -84,7 +84,8 @@ def index(request):
 
 def shortcut_update(request, pk, template_name='shortcut_update.html'):
     shortcut = get_object_or_404(Shortcut, pk=pk)
-    form = ShortcutForm(request.POST or None, instance=shortcut)
+    form = ShortcutForm(request.POST or None, request.FILES or None, instance=shortcut)
+
     if form.is_valid():
         form.save()
         return redirect('shortcut_list')
@@ -97,3 +98,40 @@ class ShortcutDelete(DeleteView):
 class ShortcutViewSet(viewsets.ModelViewSet):
     queryset = Shortcut.objects.all().order_by('title_fi')
     serializer_class = ShortcutSerializer
+
+# Figures
+class SingleFigureList(LoginRequiredMixin, ListView):
+    model = SingleFigure
+    context_object_name = 'figure_list'
+    template_name = 'figure_list.html'
+    queryset = SingleFigure.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(SingleFigureList, self).get_context_data(**kwargs)
+        context['parents'] = Figure.objects.all()
+        return context
+
+class SingleFigureView(DetailView):
+    model = SingleFigure
+    template_name = 'figure_detail.html'
+
+    def index(request):
+        # Generate counts of some of the main objects
+        num_figures = SingleFigure.objects.all().count()
+            
+        context = {
+            'num_figures': num_figures
+        }
+
+        # Render the HTML template index.html with the data in the context variable
+        return render(request, 'index.html', context=context)
+
+def figure_update(request, pk, template_name='figure_update.html'):
+    figure = get_object_or_404(SingleFigure, pk=pk)
+    form = SingleFigureForm(request.POST or None, request.FILES or None, instance=figure)
+    print(request.POST.get('placement_id'))
+    print(request.POST.get('figure'))
+    if form.is_valid():
+        form.save()
+        return redirect('figure_list')
+    return render(request, template_name, {'form':form})
