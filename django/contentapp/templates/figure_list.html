@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+    <div class="row">
+        <div class="col">
+            <h1>Figures</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col-10">Title</div>
+                <div class="col-auto">View</div>
+                <div class="col-auto">Edit</div>
+                <!-- <div class="col-auto">Delete</div> -->
+            </div>
+
+            {% for parent in parents %}
+                <div class="row list-item">
+                    <div class="col-10">
+                        <h3>{{ parent.title_fi }}</h3>
+                    </div>
+                </div>
+                {% for figure in figure_list %}
+                    {% if figure.figure.pk == parent.pk %}
+                        <div class="row list-item">
+                            <div class="col-10">{{ figure.title_fi }}</div>
+                            <div class="col-auto"><a href="{% url "figure_view" figure.id %}">view</a></div>
+                            <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+
+            {% endfor %}
+
+            <!-- {% for figure in figure_list %}
+            <div class="row list-item">
+                <div class="col-10">{{ figure.title_fi }}, {{ figure.figure }}</div>
+                <div class="col-auto"><a href="{% url "figure_view" figure.id %}">view</a></div>
+                <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
+            </div>
+            {% endfor %} -->
+        </div>
+    </div>
+{% endblock %}
