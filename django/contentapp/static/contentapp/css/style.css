@@ -8,6 +8,16 @@
     font-weight: 500;
 }
 
+.strong {
+    font-weight: bold;
+}
+
+ul.errorlist.nonfield {
+    padding: 0;
+    list-style: none;
+    color: red;
+}
+
 .cover-img {
     height: 150px;
     width: 100%;
