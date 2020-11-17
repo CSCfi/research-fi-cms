@@ -21,8 +21,7 @@
             {% if figure.figure.pk == parent.pk %}
               <div class="col list-group-item" data-id={{ figure.pk}} data-parent={{ parent.pk }}>
                 <div class="row d-flex justify-content-between">
-                  <!-- <span class="col-auto handle"></span> -->
-                  <div class="col-10">{{ figure.title_fi }} position: {{ figure.placement_id }}</div>
+                  <div class="col-10">{{ figure.title_fi }}</div>
                   <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
                 </div>
               </div>
@@ -30,14 +29,6 @@
           {% endfor %}
         </div>
       {% endfor %}
-
-      <!-- {% for figure in figure_list %}
-      <div class="row list-item">
-          <div class="col-10">{{ figure.title_fi }}, {{ figure.figure }}</div>
-          <div class="col-auto"><a href="{% url "figure_view" figure.id %}">view</a></div>
-          <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
-      </div>
-      {% endfor %} -->
     </div>
   </div>
   <div id="snackbar">Order saved</div>
