@@ -23,7 +23,7 @@ class ShortcutForm(forms.ModelForm):
 class SingleFigureForm(forms.ModelForm):
     class Meta:
         model = SingleFigure
-        fields = ['figure', 'placement_id', 'title_fi', 'title_sv', 'title_en', 'description_fi', 'description_sv', 'description_en', 'thumbnail', 'iframe_fi', 'iframe_sv', 'iframe_en',
+        fields = ['figure', 'title_fi', 'title_sv', 'title_en', 'description_fi', 'description_sv', 'description_en', 'thumbnail', 'iframe_fi', 'iframe_sv', 'iframe_en',
         'link_id', 'source_fi', 'source_sv', 'source_en', 'info_fi', 'info_sv', 'info_en', 'roadmap']
     def __init__(self, *args, **kwargs):
         super(SingleFigureForm, self).__init__(*args, **kwargs)

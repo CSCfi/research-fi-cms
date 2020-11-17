@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from ordered_model.models import OrderedModel, OrderedModelBase
 
 class Lang(models.TextChoices):
     FI = 'fi', "Suomi"
@@ -68,7 +69,7 @@ class Figure(models.Model):
     def __str__(self):
         return self.title_fi
 
-class SingleFigure(models.Model):
+class SingleFigure(OrderedModelBase):
     figure = models.ForeignKey(Figure, related_name='items', on_delete=models.CASCADE)
     lang = models.CharField(
         max_length=2,
@@ -86,7 +87,9 @@ class SingleFigure(models.Model):
     iframe_en = models.CharField(max_length=500, blank=True)
     iframe_sv = models.CharField(max_length=500, blank=True)
     link_id = models.CharField(max_length=4, blank=True)
-    placement_id = models.IntegerField()
+    placement_id = models.PositiveIntegerField(editable=False, db_index=True)
+    order_field_name = "placement_id"
+    order_with_respect_to = 'figure'
     source_fi = models.CharField(max_length=500, blank=True)
     source_en = models.CharField(max_length=500, blank=True)
     source_sv = models.CharField(max_length=500, blank=True)
@@ -96,7 +99,7 @@ class SingleFigure(models.Model):
     roadmap = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ['figure', 'placement_id']
+        # unique_together = ['figure', 'placement_id']
         ordering = ['placement_id']
 
     def __str__(self):

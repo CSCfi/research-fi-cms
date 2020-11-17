@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'ckeditor',
     'ckeditor_uploader',
+    'ordered_model'
 ]
 
 MIDDLEWARE = [

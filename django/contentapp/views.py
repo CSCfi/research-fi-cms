@@ -1,5 +1,6 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -111,6 +112,13 @@ class SingleFigureList(LoginRequiredMixin, ListView):
         context['parents'] = Figure.objects.all()
         return context
 
+    def post(self, request):
+        template_name = 'figure_list.html'
+        current = json.loads(request.body)['current']
+        new = json.loads(request.body)['new']
+        SingleFigure.objects.get(pk=current).to(int(new))
+        return render(request, template_name)
+
 class SingleFigureView(DetailView):
     model = SingleFigure
     template_name = 'figure_detail.html'
@@ -129,8 +137,10 @@ class SingleFigureView(DetailView):
 def figure_update(request, pk, template_name='figure_update.html'):
     figure = get_object_or_404(SingleFigure, pk=pk)
     form = SingleFigureForm(request.POST or None, request.FILES or None, instance=figure)
-    print(request.POST.get('placement_id'))
-    print(request.POST.get('figure'))
+    current_figure = request.POST.get('figure')
+    current_placement = request.POST.get('placement_id')
+    parent_objects = SingleFigure.objects.filter(figure=current_figure)
+
     if form.is_valid():
         form.save()
         return redirect('figure_list')
