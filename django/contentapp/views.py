@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Page, Shortcut, SingleFigure, Figure, Sector, Organization
-from .forms import PageForm, ShortcutForm, SingleFigureForm, SectorForm
+from .forms import PageForm, ShortcutForm, SingleFigureForm, SectorForm, OrganizationForm
 from rest_framework import viewsets
 from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
 from django.db.models import Max, Min
@@ -190,4 +190,34 @@ def sector_update(request, pk, template_name='sector_update.html'):
   if form.is_valid():
     form.save()
     return redirect('sector_list')
+  return render(request, template_name, {'form':form})
+
+# Organizations
+class OrganizationList(LoginRequiredMixin, ListView):
+  model = Organization
+  context_object_name = 'organization_list'
+  template_name = 'organization_list.html'
+  queryset = Organization.objects.all()
+
+  def get_context_data(self, **kwargs):
+    context = super(OrganizationList, self).get_context_data(**kwargs)
+    context['parents'] = Sector.objects.all()
+    return context
+
+  # Enable drag & drop position change
+  def post(self, request):
+    print("asd")
+    template_name = 'organization_list.html'
+    current = json.loads(request.body)['current']
+    new = json.loads(request.body)['new']
+    Organization.objects.get(pk=current).to(int(new))
+    return render(request, template_name)
+
+def organization_update(request, pk, template_name='organization_update.html'):
+  org_update = get_object_or_404(Organization, pk=pk)
+  form = OrganizationForm(request.POST or None, request.FILES or None, instance=org_update)
+
+  if form.is_valid():
+    form.save()
+    return redirect('organization_list')
   return render(request, template_name, {'form':form})
