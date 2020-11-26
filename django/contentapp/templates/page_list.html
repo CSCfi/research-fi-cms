@@ -10,20 +10,19 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="row">
-                <div class="col-10">Title</div>
-                <div class="col-auto">View</div>
-                <div class="col-auto">Edit</div>
-                <!-- <div class="col-auto">Delete</div> -->
+            <div class="row list-group">
+                {% for page in object_list %}
+                <div class="col list-group-item">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-10">{{ page.title_fi }}</div>
+                        <!-- <div class="col-auto"><a href="{% url "page_view" page.id %}">view</a></div> -->
+                        <div class="col-auto"><a href="{% url "page_edit" page.id %}">edit</a></div>
+                        <!-- <div class="col-auto"><a href="{% url "page_delete" page.id %}">delete</a></div> -->
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% for page in object_list %}
-            <div class="row list-item">
-                <div class="col-10">{{ page.title_fi }}</div>
-                <div class="col-auto"><a href="{% url "page_view" page.id %}">view</a></div>
-                <div class="col-auto"><a href="{% url "page_edit" page.id %}">edit</a></div>
-                <!-- <div class="col-auto"><a href="{% url "page_delete" page.id %}">delete</a></div> -->
-            </div>
-            {% endfor %}
+
         </div>
     </div>
 {% endblock %}
