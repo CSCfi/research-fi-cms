@@ -10,6 +10,7 @@ from .forms import PageForm, ShortcutForm, SingleFigureForm, SectorForm, Organiz
 from rest_framework import viewsets
 from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
 from django.db.models import Max, Min
+from django.contrib.auth.decorators import login_required
 
 
 # Pages
@@ -33,6 +34,7 @@ class PageCreate(CreateView):
   def index(request):
     return render(request, 'index.html', context=context)
 
+@login_required(login_url='/accounts/login/')
 def page_update(request, pk, template_name='page_update.html'):
   page = get_object_or_404(Page, pk=pk)
   form = PageForm(request.POST or None, instance=page)
@@ -58,6 +60,7 @@ class ShortcutView(DetailView):
   def index(request):
     return render(request, 'index.html', context=context)
 
+@login_required(login_url='/accounts/login/')
 def shortcut_update(request, pk, template_name='shortcut_update.html'):
   shortcut = get_object_or_404(Shortcut, pk=pk)
   form = ShortcutForm(request.POST or None, request.FILES or None, instance=shortcut)
@@ -96,6 +99,7 @@ class SingleFigureView(DetailView):
   model = SingleFigure
   template_name = 'figure_detail.html'
 
+@login_required(login_url='/accounts/login/')
 def figure_add(request, template_name='figure_add.html'):
   form = SingleFigureForm(request.POST or None)
   if form.is_valid():
@@ -103,6 +107,7 @@ def figure_add(request, template_name='figure_add.html'):
     return redirect('figure_list')
   return render(request, template_name, {'form':form})
 
+@login_required(login_url='/accounts/login/')
 def figure_update(request, pk, template_name='figure_update.html'):
   figure = get_object_or_404(SingleFigure, pk=pk)
   form = SingleFigureForm(request.POST or None, request.FILES or None, instance=figure)
@@ -153,6 +158,7 @@ class SectorList(LoginRequiredMixin, ListView):
   model = Sector
   template_name = 'sector_list.html'
 
+@login_required(login_url='/accounts/login/')
 def sector_update(request, pk, template_name='sector_update.html'):
   sector_update = get_object_or_404(Sector, pk=pk)
   form = SectorForm(request.POST or None, request.FILES or None, instance=sector_update)
@@ -183,6 +189,7 @@ class OrganizationList(LoginRequiredMixin, ListView):
     Organization.objects.get(pk=current).to(int(new))
     return render(request, template_name)
 
+@login_required(login_url='/accounts/login/')
 def organization_update(request, pk, template_name='organization_update.html'):
   org_update = get_object_or_404(Organization, pk=pk)
   form = OrganizationForm(request.POST or None, request.FILES or None, instance=org_update)
