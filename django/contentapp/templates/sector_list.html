@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <h1>Sectors</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="row list-group">
+      {% for sector in object_list %}
+      <div class="col list-group-item">
+        <div class="row d-flex justify-content-between">
+          <div class="col-10">{{ sector.name_fi }}</div>
+          <div class="col-auto"><a href="{% url "sector_edit" sector.id %}">edit</a></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
