@@ -16,4 +16,6 @@ urlpatterns = [
     path('figures/edit/<int:pk>', views.figure_update, name='figure_edit'),
     path('figures/add/', views.figure_add, name='figure_add'),
     path('figures/delete/<int:pk>', views.FigureDelete.as_view(), name='figure_delete'),
+    path('sectors/', views.SectorList.as_view(), name='sector_list'),
+    path('sectors/edit/<int:pk>', views.sector_update, name='sector_edit'),
 ]
