@@ -1,5 +1,5 @@
 from django import forms
-from .models import Page, Shortcut, SingleFigure
+from .models import Page, Shortcut, SingleFigure, Sector, Organization
 from ckeditor.widgets import CKEditorWidget
 
 class PageForm(forms.ModelForm):
@@ -27,5 +27,20 @@ class SingleFigureForm(forms.ModelForm):
         'source_fi', 'source_sv', 'source_en', 'info_fi', 'info_sv', 'info_en', 'roadmap']
     def __init__(self, *args, **kwargs):
         super(SingleFigureForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
+class OrganizationForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        fields = ['sector', 'name_fi', 'name_sv', 'name_en', 'link']
+
+class SectorForm(forms.ModelForm):
+    class Meta:
+        model = Sector
+        fields = ['name_fi', 'name_sv', 'name_en', 'subtitle_fi', 'subtitle_sv', 'subtitle_en', 'iframe_fi', 'iframe_sv', 'iframe_en',
+        'description_fi', 'description_sv', 'description_en', 'icon']
+    def __init__(self, *args, **kwargs):
+        super(SectorForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
