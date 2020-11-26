@@ -15,4 +15,5 @@ urlpatterns = [
     path('figures/view/<int:pk>', views.SingleFigureView.as_view(), name='figure_view'),
     path('figures/edit/<int:pk>', views.figure_update, name='figure_edit'),
     path('figures/add/', views.figure_add, name='figure_add'),
+    path('figures/delete/<int:pk>', views.FigureDelete.as_view(), name='figure_delete'),
 ]
