@@ -168,6 +168,7 @@ def sector_update(request, pk, template_name='sector_update.html'):
     return redirect('sector_list')
   return render(request, template_name, {'form':form})
 
+
 # Organizations
 class OrganizationList(LoginRequiredMixin, ListView):
   model = Organization
@@ -182,7 +183,6 @@ class OrganizationList(LoginRequiredMixin, ListView):
 
   # Enable drag & drop position change
   def post(self, request):
-    print("asd")
     template_name = 'organization_list.html'
     current = json.loads(request.body)['current']
     new = json.loads(request.body)['new']
