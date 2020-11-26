@@ -1,13 +1,29 @@
 from django.db import models
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from ordered_model.models import OrderedModel, OrderedModelBase
+
+class Lang(models.TextChoices):
+    FI = 'fi', "Suomi"
+    SV = 'sv', "Sverige"
+    EN = 'en', "English"
+
+class Locations(models.TextChoices):
+    HOME = '/', "Etusivu"
+    PUBLICATIONS = '/results/publications', "Julkaisut"
+    PROJECTS = '/results/fundings', "Hankkeet"
+    INFRASTRUCTURES = '/results/infrastructures', "Infrastruktuurit"
+    ORGANIZATIONS = '/results/organizations', "Organisaatiot"
+    NEWS = '/news', "Uutiset"
+    SCIENCEINNOVATIONPOLICY = '/science-innovation-policy/research-innovation-system', "Tutkimus- ja innovaatiojärjestelmä"
+    FIGURES = '/science-innovation-policy/science-research-figures', "Lukuja tieteestä ja tutkimuksesta"
+    NONE = 'javascript:void(0)', 'Script'
+    INFO = '/service-info', 'Tietoa palvelusta'
+    SITEMAP = '/sitemap', 'Sivukartta'
+    ACCESSIBILITY = '/accessibility', 'Saavutettavuus'
+    PRIVACY = '/privacy', 'Tietosuoja'
 
 class Page(models.Model):
-    class Lang(models.TextChoices):
-        FI = 'fi', "Suomi"
-        SV = 'sv', "Sverige"
-        EN = 'en', "English"
-
     lang = models.CharField(
         max_length=2,
         choices=Lang.choices,
@@ -19,8 +35,7 @@ class Page(models.Model):
     content_fi = RichTextUploadingField(blank=True)
     content_sv = RichTextUploadingField(blank=True)
     content_en = RichTextUploadingField(blank=True)
-    placement_id = models.CharField(max_length=64, blank=True)
-    description = models.CharField(max_length=500, blank=True)
+    page_id = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
         return self.title_fi
@@ -30,11 +45,54 @@ class Page(models.Model):
         
 
 class Shortcut(models.Model):
-    class Lang(models.TextChoices):
-        FI = 'fi', "Suomi"
-        SV = 'sv', "Sverige"
-        EN = 'en', "English"
+    lang = models.CharField(
+        max_length=2,
+        choices=Lang.choices,
+        default=Lang.FI
+    )
+    link = models.CharField(
+        max_length=500,
+        choices=Locations.choices,
+        default=Locations.HOME
+    )
+    placement_id = models.IntegerField()
+    title_fi = models.CharField(max_length=500)
+    title_sv = models.CharField(max_length=500, default='Enter title')
+    title_en = models.CharField(max_length=500, default='Enter title')
+    content_fi = models.TextField(blank=True)
+    content_sv = models.TextField(default='Enter content')
+    content_en = models.TextField(default='Enter content')
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image_alt_fi = models.CharField(max_length=500, default='', blank=True)
+    image_alt_sv = models.CharField(max_length=500, default='', blank=True)
+    image_alt_en = models.CharField(max_length=500, default='', blank=True)
 
+    class Meta:
+        ordering = ['placement_id']
+
+    def __str__(self):
+        return self.title_fi
+
+    def get_absolute_url(self):
+        return reverse('shortcut_edit', kwargs={'pk': self.pk})
+
+class Figure(models.Model):
+    lang = models.CharField(
+        max_length=2,
+        choices=Lang.choices,
+        default=Lang.FI
+    )
+    placement_id = models.IntegerField()
+    title_fi = models.CharField(max_length=500, default='Enter title')
+    title_sv = models.CharField(max_length=500, default='Enter title')
+    title_en = models.CharField(max_length=500, default='Enter title')
+
+    def __str__(self):
+        return self.title_fi
+
+class SingleFigure(OrderedModelBase):
+    figure = models.ForeignKey(Figure, related_name='items', on_delete=models.CASCADE)
+    placement_id = models.PositiveIntegerField(editable=True, db_index=True)
     lang = models.CharField(
         max_length=2,
         choices=Lang.choices,
@@ -43,16 +101,73 @@ class Shortcut(models.Model):
     title_fi = models.CharField(max_length=500)
     title_sv = models.CharField(max_length=500, default='Enter title')
     title_en = models.CharField(max_length=500, default='Enter title')
-    content_fi = models.TextField(blank=True)
-    content_sv = models.TextField(default='Enter content')
-    content_en = models.TextField(default='Enter content')
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
-    link = models.URLField(max_length=500, blank=True)
-    placement_id = models.CharField(max_length=64, blank=True)
-    description = models.CharField(max_length=500, blank=True)
+    description_fi = RichTextUploadingField(blank=True)
+    description_en = RichTextUploadingField(blank=True)
+    description_sv = RichTextUploadingField(blank=True)
+    thumbnail = models.ImageField(upload_to='images/figures/', null=True, blank=True)
+    iframe_fi = models.CharField(max_length=500, blank=True)
+    iframe_en = models.CharField(max_length=500, blank=True)
+    iframe_sv = models.CharField(max_length=500, blank=True)
+    order_field_name = "placement_id"
+    order_with_respect_to = 'figure'
+    source_fi = models.CharField(max_length=500, blank=True)
+    source_en = models.CharField(max_length=500, blank=True)
+    source_sv = models.CharField(max_length=500, blank=True)
+    info_fi = RichTextUploadingField(blank=True)
+    info_en = RichTextUploadingField(blank=True)
+    info_sv = RichTextUploadingField(blank=True)
+    roadmap = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['figure', 'placement_id']
 
     def __str__(self):
-        return self.title_fi
+        return '%d: %s' % (self.placement_id, self.title_fi)
 
-    def get_absolute_url(self):
-        return reverse('shortcut_edit', kwargs={'pk': self.pk})
+class Sector(models.Model):
+    lang = models.CharField(
+        max_length=2,
+        choices=Lang.choices,
+        default=Lang.FI
+    )
+    name_fi = models.CharField(max_length=500, default='Enter sector name')
+    name_sv = models.CharField(max_length=500, default='Enter sector name')
+    name_en = models.CharField(max_length=500, default='Enter sector name')
+    subtitle_fi = models.CharField(max_length=500, blank=True)
+    subtitle_sv = models.CharField(max_length=500, blank=True)
+    subtitle_en = models.CharField(max_length=500, blank=True)
+    placement_id = models.PositiveIntegerField(editable=True, db_index=True)
+    iframe_fi = models.CharField(max_length=500, blank=True)
+    iframe_en = models.CharField(max_length=500, blank=True)
+    iframe_sv = models.CharField(max_length=500, blank=True)
+    description_fi = RichTextUploadingField(blank=True)
+    description_en = RichTextUploadingField(blank=True)
+    description_sv = RichTextUploadingField(blank=True)
+    icon = models.CharField(max_length=500, default='Add icon code')
+
+    class Meta:
+        ordering = ['placement_id']
+
+    def __str__(self):
+        return self.name_fi
+
+class Organization(OrderedModelBase):
+    sector = models.ForeignKey(Sector, related_name='organizations', on_delete=models.CASCADE)
+    lang = models.CharField(
+        max_length=2,
+        choices=Lang.choices,
+        default=Lang.FI
+    )
+    name_fi = models.CharField(max_length=500, default='Enter organization name')
+    name_sv = models.CharField(max_length=500, default='Enter organization name')
+    name_en = models.CharField(max_length=500, default='Enter organization name')
+    placement_id = models.PositiveIntegerField(editable=True, db_index=True)
+    order_field_name = "placement_id"
+    order_with_respect_to = 'sector'
+    link = models.CharField(max_length=500, default='Enter link target')
+
+    class Meta:
+        ordering = ['sector', 'placement_id']
+
+    def __str__(self):
+        return '%d: %s' % (self.placement_id, self.name_fi)

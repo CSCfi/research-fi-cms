@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from contentapp.models import Page, Shortcut
-from contentapp.serializers import PageSerializer, ShortcutSerializer
+from contentapp.models import Page, Shortcut, Figure, Sector
+from contentapp.serializers import PageSerializer, ShortcutSerializer, FigureSerializer, SectorSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -11,3 +11,11 @@ class PostViewSet(viewsets.ModelViewSet):
 class ShortcutViewSet(viewsets.ModelViewSet):
     queryset = Shortcut.objects.all()
     serializer_class = ShortcutSerializer
+
+class FigureViewSet(viewsets.ModelViewSet):
+    queryset = Figure.objects.all()
+    serializer_class = FigureSerializer
+
+class SectorViewSet(viewsets.ModelViewSet):
+    queryset = Sector.objects.all()
+    serializer_class = SectorSerializer

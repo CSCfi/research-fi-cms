@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col">
-    <h1>Shortcut Edit</h1>
+    <h1>Organization Edit</h1>
     <div class="row">
       <div class="col-2">
         Choose language:
@@ -56,96 +56,52 @@
       {{ form.media }}
       {{ form.non_field_errors }}
 
-      <div class="row section">
-        <div class="col-2">
-          Choose position:
-        </div>
-        <div class="col-1">
-          {{ form.placement_id }}
-        </div>
-      </div>
-
       <!-- Finnish form elements -->
       <div id="fi">
         <div class="row section">
           <div class="col-12">
-            {{ form.title_fi.errors }}
+            {{ form.name_fi.errors }}
             <label class="font-weight-bold">Title</label>
-            <div id="title">{{ form.title_fi }}</div>
-          </div>
-        </div>
-        <div class="row section">
-          <div class="col-12">
-            <div id="fi">
-              {{ form.content_fi.errors }}
-              <label class="font-weight-bold">Content</label>
-              {{ form.content_fi }}
-            </div>
+            <div id="title">{{ form.name_fi }}</div>
           </div>
         </div>
       </div>
 
+      <!-- Swedish form elements -->
       <div id="sv" style="display: none;">
         <div class="row section">
           <div class="col-12">
-            {{ form.title_sv.errors }}
+            {{ form.name_sv.errors }}
             <label class="font-weight-bold">Title</label>
-            <div id="title">{{ form.title_sv }}</div>
-          </div>
-        </div>
-        <div class="row section">
-          <div class="col-12">
-            {{ form.content_sv.errors }}
-            <label class="font-weight-bold">Content</label>
-            {{ form.content_sv }}
+            <div id="title">{{ form.name_sv }}</div>
           </div>
         </div>
       </div>
 
+      <!-- English form elements -->
       <div id="en" style="display: none;">
         <div class="row section">
           <div class="col-12">
-            {{ form.title_en.errors }}
+            {{ form.name_en.errors }}
             <label class="font-weight-bold">Title</label>
-            <div id="title">{{ form.title_en }}</div>
-          </div>
-        </div>
-        <div class="row section">
-          <div class="col-12">
-            <div id="en">
-              {{ form.content_en.errors }}
-              <label class="font-weight-bold">Content</label>
-              {{ form.content_en }}
-            </div>
+            <div id="title">{{ form.name_en }}</div>
           </div>
         </div>
       </div>
 
-      <!-- Image upload -->
-      <div class="row section">
-        {% if form.instance.image %}
-        <div class="col-2">
-          <img class="preview" src="{{ form.instance.image.url }}">
-        </div>
-        {% endif %}
-        <div class="col-10">
-          {{ form.image.errors }}
-          {{ form.image }}
-        </div>
-      </div>
-
-      <!-- Target link -->
+      <!-- Link to orgId -->
       <div class="row section">
         <div class="col-12">
           {{ form.link.errors }}
-          <label class="strong">Link</label>
+          <label class="strong">TTV organization ID</label>
           {{ form.link }}
         </div>
       </div>
+
       <div class="row section">
         <div class="col-12">
           <button class="btn btn-primary" type="submit" value="Submit">Update</button>
-          <a href="/pages/list"><button class="btn btn-secondary" value="Cancel">Cancel</button></a>
+          <a href="/organizations"><button class="btn btn-secondary" type="button" value="Cancel">Cancel</button></a>
         </div>
       </div>
     </form>

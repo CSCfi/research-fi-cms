@@ -1,0 +1,86 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+<div class="row">
+  <div class="col">
+    <h1>Figures</h1>
+  </div>
+  <div class="col-auto align-self-center">
+    <a href="{% url "figure_add" %}">
+      <button type="button" class="btn btn-primary">Create new</button>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {% for parent in parents %}
+    <div class="row list-item">
+      <div class="col-10">
+        <h3>{{ parent.title_fi }}</h3>
+      </div>
+    </div>
+    <div id="groups" class="row list-item list-group">
+      {% for figure in figure_list %}
+      {% if figure.figure.pk == parent.pk %}
+      <div class="col list-group-item pointer" data-id={{ figure.pk}} data-parent={{ parent.pk }}>
+        <div class="row d-flex justify-content-between">
+          <div class="col-10">{{ figure.title_fi }}</div>
+          <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
+          <div class="col-auto"><a class="text-danger" href="{% url "figure_delete" figure.id %}">delete</a></div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div id="snackbar">Order saved</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'contentapp/js/Sortable.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<script>
+  $(function () {
+    var csrftoken = Cookies.get('csrftoken');
+
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    // Ensure jQuery AJAX calls set the CSRF header to prevent security errors
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      }
+    });
+  });
+
+  const containers = document.querySelectorAll(".list-group");
+  for (var i = 0; i < containers.length; i++) {
+    new Sortable(containers[i], {
+      animation: 250,
+      onEnd: function (e) {
+        const snackbar = document.getElementById("snackbar")
+        snackbar.className = "show"
+        setTimeout(() => {
+          snackbar.className = "hide"
+        }, 3000)
+        const jsonString = JSON.stringify({ current: e.item.getAttribute("data-id"), new: e.newIndex + 1, parent: e.item.getAttribute("data-parent") })
+        $.ajax({
+          type: "POST",
+          data: jsonString,
+          url: ""
+        });
+      },
+    });
+  }
+</script>
+{% endblock %}

@@ -1,13 +1,39 @@
 from rest_framework import serializers
 
-from .models import Page, Shortcut
+from .models import Page, Shortcut, Figure, SingleFigure, Sector, Organization
 
 class PageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ('placement_id', 'title_fi', 'title_sv', 'title_en', 'content_fi', 'content_sv', 'content_en')        
+        fields = ('page_id', 'title_fi', 'title_sv', 'title_en', 'content_fi', 'content_sv', 'content_en')        
 
-class ShortcutSerializer(serializers.HyperlinkedModelSerializer):
+class ShortcutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shortcut
-        fields = ('placement_id', 'title_fi', 'title_sv', 'title_en', 'content_fi', 'content_sv', 'content_en', 'image', 'link')
+        fields = ['placement_id', 'title_fi', 'title_sv', 'title_en', 'content_fi', 'content_sv', 'content_en', 'image', 'image_alt_fi', 'image_alt_sv', 'image_alt_en', 'link']
+
+class SingleFigureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SingleFigure
+        fields = ['placement_id', 'title_fi', 'title_sv', 'title_en', 'description_fi', 'description_sv', 'description_en', 'thumbnail', 'iframe_fi', 'iframe_sv', 'iframe_en',
+        'source_fi', 'source_sv', 'source_en', 'info_fi', 'info_sv', 'info_en', 'roadmap']
+
+class FigureSerializer(serializers.ModelSerializer):
+    items = SingleFigureSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Figure
+        fields = ['placement_id', 'title_fi', 'title_sv', 'title_en', 'items']
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = ['placement_id', 'name_fi', 'name_sv', 'name_en', 'link']
+
+class SectorSerializer(serializers.ModelSerializer):
+    organizations = OrganizationSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Sector
+        fields = ['placement_id', 'name_fi', 'name_sv', 'name_en', 'subtitle_fi', 'subtitle_sv', 'subtitle_en', 'iframe_fi', 'iframe_sv', 'iframe_en',
+        'description_fi', 'description_sv', 'description_en', 'icon', 'organizations']
