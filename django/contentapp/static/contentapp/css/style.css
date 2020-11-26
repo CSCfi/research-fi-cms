@@ -50,6 +50,10 @@ img.preview {
     height: auto;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 #snackbar {
     visibility: hidden;
     min-width: 12rem;
