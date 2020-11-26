@@ -33,7 +33,12 @@ class SingleFigureForm(forms.ModelForm):
 class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
-        fields = ['sector', 'name_fi', 'name_sv', 'name_en', 'link']
+        fields = ['name_fi', 'name_sv', 'name_en', 'link']
+
+    def __init__(self, *args, **kwargs):
+        super(OrganizationForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
 class SectorForm(forms.ModelForm):
     class Meta:
