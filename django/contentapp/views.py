@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Page, Shortcut, SingleFigure, Figure
-from .forms import PageForm, ShortcutForm, SingleFigureForm
+from .models import Page, Shortcut, SingleFigure, Figure, Sector, Organization
+from .forms import PageForm, ShortcutForm, SingleFigureForm, SectorForm
 from rest_framework import viewsets
 from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
 from django.db.models import Max, Min
@@ -176,3 +176,18 @@ class FigureDelete(LoginRequiredMixin, DeleteView):
   model = SingleFigure
   template_name = 'figure_delete.html'
   success_url = reverse_lazy('figure_list')
+
+
+# Sectors
+class SectorList(LoginRequiredMixin, ListView):
+  model = Sector
+  template_name = 'sector_list.html'
+
+def sector_update(request, pk, template_name='sector_update.html'):
+  sector_update = get_object_or_404(Sector, pk=pk)
+  form = SectorForm(request.POST or None, request.FILES or None, instance=sector_update)
+
+  if form.is_valid():
+    form.save()
+    return redirect('sector_list')
+  return render(request, template_name, {'form':form})
