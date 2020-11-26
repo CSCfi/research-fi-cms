@@ -30,6 +30,9 @@
                 <li {% if "/figures/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
                 <a class="nav-link" href="/figures/">Figures</a>
                 </li>
+                <li {% if "/sectors/" in request.path %}class="active nav-item" {% else%} class="nav-item"{% endif %}>
+                <a class="nav-link" href="/sectors/">Sectors</a>
+                </li>
             </ul>
             <a href="/accounts/logout">
                 <button class="btn btn-secondary" type="submit">Log out</button>
@@ -38,8 +41,8 @@
         {% endif %}
     </nav>
     <div class="container pt-4">
-        {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
-        {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+        {% block sidebar %}{% endblock %}
+        {% block content %}{% endblock %}
         {% block extrajs %}{% endblock %}
     </div>
     
