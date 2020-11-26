@@ -11,6 +11,8 @@ from rest_framework import viewsets
 from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
 from django.db.models import Max, Min
 
+
+# Pages
 class PageList(LoginRequiredMixin, ListView):
   model = Page
   template_name = 'page_list.html'
@@ -19,9 +21,7 @@ class PageView(DetailView):
   model = Page
   template_name = 'page_detail.html'
   def get_context_data(self, **kwargs):
-    # Call the base implementation first to get a context
     context = super().get_context_data(**kwargs)
-    # Add in a QuerySet of all the books
     context['page_list'] = Page.objects.all()
     return context
 
@@ -30,16 +30,8 @@ class PageCreate(CreateView):
   fields = ['title_fi', 'content_fi', 'lang']
   success_url = reverse_lazy('page_list')
 
-def index(request):
-  # Generate counts of some of the main objects
-  num_pages = Page.objects.all().count()
-      
-  context = {
-    'num_pages': num_pages,
-  }
-
-  # Render the HTML template index.html with the data in the context variable
-  return render(request, 'index.html', context=context)
+  def index(request):
+    return render(request, 'index.html', context=context)
 
 def page_update(request, pk, template_name='page_update.html'):
   page = get_object_or_404(Page, pk=pk)
@@ -49,17 +41,12 @@ def page_update(request, pk, template_name='page_update.html'):
     return redirect('page_list')
   return render(request, template_name, {'form':form})
 
-class PageDelete(DeleteView):
-  model = Page
-  success_url = reverse_lazy('page_list')
-
 class PageViewSet(viewsets.ModelViewSet):
   queryset = Page.objects.all().order_by('title_fi')
   serializer_class = PageSerializer
 
-from rest_framework import viewsets
-from .serializers import ShortcutSerializer
 
+# Shortcuts
 class ShortcutList(LoginRequiredMixin, ListView):
   model = Shortcut
   template_name = 'shortcut_list.html'
@@ -68,21 +55,8 @@ class ShortcutView(DetailView):
   model = Shortcut
   template_name = 'shortcut_detail.html'
 
-# class ShortcutCreate(CreateView):
-#     model = Shortcut
-#     fields = ['title_fi', 'content_fi', 'lang']
-#     success_url = reverse_lazy('shortcut_list')
-
-def index(request):
-  # Generate counts of some of the main objects
-  num_shortcuts = Shortcut.objects.all().count()
-      
-  context = {
-    'num_shortcuts': num_shortcuts,
-  }
-
-  # Render the HTML template index.html with the data in the context variable
-  return render(request, 'index.html', context=context)
+  def index(request):
+    return render(request, 'index.html', context=context)
 
 def shortcut_update(request, pk, template_name='shortcut_update.html'):
   shortcut = get_object_or_404(Shortcut, pk=pk)
@@ -92,10 +66,6 @@ def shortcut_update(request, pk, template_name='shortcut_update.html'):
     form.save()
     return redirect('shortcut_list')
   return render(request, template_name, {'form':form})
-
-class ShortcutDelete(DeleteView):
-  model = Shortcut
-  success_url = reverse_lazy('shortcut_list')
 
 class ShortcutViewSet(viewsets.ModelViewSet):
   queryset = Shortcut.objects.all().order_by('title_fi')
