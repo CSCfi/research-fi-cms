@@ -9,6 +9,7 @@ from .models import Page, Shortcut, SingleFigure, Figure
 from .forms import PageForm, ShortcutForm, SingleFigureForm
 from rest_framework import viewsets
 from .serializers import PageSerializer, ShortcutSerializer, SingleFigureSerializer
+from django.db.models import Max, Min
 
 class PageList(LoginRequiredMixin, ListView):
   model = Page
@@ -100,6 +101,7 @@ class ShortcutViewSet(viewsets.ModelViewSet):
   queryset = Shortcut.objects.all().order_by('title_fi')
   serializer_class = ShortcutSerializer
 
+
 # Figures
 class SingleFigureList(LoginRequiredMixin, ListView):
   model = SingleFigure
@@ -112,6 +114,7 @@ class SingleFigureList(LoginRequiredMixin, ListView):
     context['parents'] = Figure.objects.all()
     return context
 
+  # Enable drag & drop position change
   def post(self, request):
     template_name = 'figure_list.html'
     current = json.loads(request.body)['current']
@@ -123,18 +126,7 @@ class SingleFigureView(DetailView):
   model = SingleFigure
   template_name = 'figure_detail.html'
 
-  def index(request):
-    # Generate counts of some of the main objects
-    num_figures = SingleFigure.objects.all().count()
-        
-    context = {
-        'num_figures': num_figures
-    }
-
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html', context=context)
-
-def figure_add(request, template_name='figure_update.html'):
+def figure_add(request, template_name='figure_add.html'):
   form = SingleFigureForm(request.POST or None)
   if form.is_valid():
     form.save()
@@ -144,11 +136,43 @@ def figure_add(request, template_name='figure_update.html'):
 def figure_update(request, pk, template_name='figure_update.html'):
   figure = get_object_or_404(SingleFigure, pk=pk)
   form = SingleFigureForm(request.POST or None, request.FILES or None, instance=figure)
-  current_figure = request.POST.get('figure')
-  current_placement = request.POST.get('placement_id')
-  parent_objects = SingleFigure.objects.filter(figure=current_figure)
+  current = request.POST.get('figure')
+  figure_parent = figure.figure.pk
 
   if form.is_valid():
+    form.save(commit=False)
+    # Move updated item to bottom if parent changes
+    if int(figure_parent) != int(current):
+      if SingleFigure.objects.filter(figure=current).aggregate(Max('placement_id'))['placement_id__max']:
+        figure.placement_id = SingleFigure.objects.filter(figure=current).aggregate(Max('placement_id'))['placement_id__max'] + 1
+      else:
+        figure.placement_id = 1
     form.save()
+
+    # Move items up to preserve concurrent placement id's
+    for parent in Figure.objects.filter():
+      if SingleFigure.objects.filter(figure=parent.pk):
+        min_placement = SingleFigure.objects.filter(figure=parent.pk).aggregate(Min('placement_id'))['placement_id__min']
+        if min_placement > 1:
+          SingleFigure.objects.get(figure=parent.pk, placement_id=min_placement).to(1)
+          for f in SingleFigure.objects.filter(figure=parent.pk):
+            if SingleFigure.objects.get(figure=parent.pk, placement_id=f.placement_id).placement_id > 1:
+              SingleFigure.objects.get(figure=parent.pk, placement_id=f.placement_id).up()
+
+        # Move items up if empty space
+        if SingleFigure.objects.filter(figure=parent.pk).count() > 1:
+          object_count = SingleFigure.objects.filter(figure=parent.pk).count()
+          for f in SingleFigure.objects.filter(figure=parent.pk):
+            if SingleFigure.objects.filter(figure=parent.pk, placement_id=f.placement_id):
+              next_fig = SingleFigure.objects.get(figure=parent.pk, placement_id=f.placement_id).next()
+              if next_fig and (not SingleFigure.objects.filter(figure=parent.pk, placement_id=f.placement_id + 1)):
+                for index, movable in enumerate(SingleFigure.objects.filter(figure=parent.pk, placement_id__gt=f.placement_id)):
+                  SingleFigure.objects.get(figure=parent.pk, placement_id=movable.placement_id).to(f.placement_id + (index + 1))
+
     return redirect('figure_list')
   return render(request, template_name, {'form':form})
+
+class FigureDelete(LoginRequiredMixin, DeleteView):
+  model = SingleFigure
+  template_name = 'figure_delete.html'
+  success_url = reverse_lazy('figure_list')
