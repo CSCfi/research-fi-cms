@@ -26,7 +26,7 @@
       {% if figure.figure.pk == parent.pk %}
       <div class="col list-group-item pointer" data-id={{ figure.pk}} data-parent={{ parent.pk }}>
         <div class="row d-flex justify-content-between">
-          <div class="col-10">{{ figure.title_fi }}, placement: {{ figure.placement_id }}</div>
+          <div class="col-10">{{ figure.title_fi }}</div>
           <div class="col-auto"><a href="{% url "figure_edit" figure.id %}">edit</a></div>
           <div class="col-auto"><a class="text-danger" href="{% url "figure_delete" figure.id %}">delete</a></div>
         </div>
