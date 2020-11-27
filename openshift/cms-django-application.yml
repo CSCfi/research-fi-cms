@@ -54,7 +54,7 @@ objects:
       sourceStrategy:
         from:
           kind: DockerImage
-          name: centos/python-36-centos7
+          name: docker-registry.default.svc:5000/researchfi/python-36-centos7
         env:
           - name: ENABLE_PIPENV
             value: "true"
