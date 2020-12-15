@@ -78,6 +78,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
 
+# ALlow CORS for test builds
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.rahtiapp\.fi$",
+]
+
 ROOT_URLCONF = 'cms.urls'
 
 TEMPLATES = [
