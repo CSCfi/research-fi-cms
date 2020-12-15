@@ -37,6 +37,9 @@ class Page(models.Model):
     content_en = RichTextUploadingField(blank=True)
     page_id = models.CharField(max_length=64, blank=True)
 
+    class Meta:
+        ordering = ['page_id']
+
     def __str__(self):
         return self.title_fi
 
