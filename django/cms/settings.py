@@ -85,6 +85,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://research.fi/",
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 ROOT_URLCONF = 'cms.urls'
 
