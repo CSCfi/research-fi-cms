@@ -75,6 +75,7 @@ REST_FRAMEWORK = {
 # Allow CORS from local Angular development server
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "http://localhost:8080",
 ]
 
 ROOT_URLCONF = 'cms.urls'
