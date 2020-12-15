@@ -75,18 +75,15 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:8080",
-    "https://researchfi-test.rahtiapp.fi/fi/",
+    "https://researchfi-test.rahtiapp.fi",
     "https://researchfi-test-en.rahtiapp.fi",
     "https://researchfi-test-sv.rahtiapp.fi",
     "https://researchfi-releasetest.rahtiapp.fi",
     "https://researchfi-production-staging.rahtiapp.fi",
-    "https://tiedejatutkimus.fi/",
-    "https://forskning.fi/",
-    "https://research.fi/",
+    "https://tiedejatutkimus.fi",
+    "https://forskning.fi",
+    "https://research.fi",
 ]
-
-CORS_ORIGIN_ALLOW_ALL = True
-
 
 ROOT_URLCONF = 'cms.urls'
 
