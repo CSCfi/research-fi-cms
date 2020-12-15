@@ -72,16 +72,19 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Allow CORS from local Angular development server
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:8080",
+    "https://researchfi-test.rahtiapp.fi",
+    "https://researchfi-test-en.rahtiapp.fi",
+    "https://researchfi-test-sv.rahtiapp.fi",
+    "https://researchfi-releasetest.rahtiapp.fi",
+    "https://researchfi-production-staging.rahtiapp.fi",
+    "https://tiedejatutkimus.fi/",
+    "https://forskning.fi/",
+    "https://research.fi/",
 ]
 
-# ALlow CORS for test builds
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://\w+\.rahtiapp\.fi$",
-]
 
 ROOT_URLCONF = 'cms.urls'
 
