@@ -58,9 +58,10 @@
         </div>
         <div class="col-3">
           {{ form.figure }}
-          <!-- {{ form.placement_id }} -->
         </div>
       </div>
+
+      <!-- Finnish content -->
       <div id="fi" class="row section">
         <div class="col-12">
           {{ form.title_fi.errors }}
@@ -69,17 +70,46 @@
           <label id="testTitle"></label>
         </div>
         <div class="col-12">
+          {{ form.iframe_fi.errors }}
+          <label class="strong">iFrame</label>
+          {{ form.iframe_fi }}
+        </div>
+        <div class="col-12">
           <div class="row">
             <div class="col-12">
               {{ form.description_fi.errors }}
-              <label>Description</label>
+              <label class="strong">Description</label>
             </div>
             <div class="col-12">
               {{ form.description_fi }}
             </div>
           </div>
         </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              {{ form.info_fi.errors }}
+              <label class="strong">Info</label>
+            </div>
+            <div class="col-12">
+              {{ form.info_fi }}
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              {{ form.source_fi.errors }}
+              <label class="strong">Source</label>
+            </div>
+            <div class="col-12">
+              {{ form.source_fi }}
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Swedish content -->
       <div id="sv" class="row section" style="display: none;">
         <div class="col-12 pb-4">
           {{ form.title_sv.errors }}
@@ -90,7 +120,7 @@
           <div class="row">
             <div class="col-12">
               {{ form.description_sv.errors }}
-              <label>Description</label>
+              <label class="strong">Description</label>
             </div>
             <div class="col-12">
               {{ form.description_sv }}
@@ -98,6 +128,8 @@
           </div>
         </div>
       </div>
+
+      <!-- English content -->
       <div id="en" class="row section" style="display: none;">
         <div class="col-12 pb-4">
           {{ form.title_en.errors }}
@@ -105,23 +137,57 @@
           {{ form.title_en }}
         </div>
         <div class="col-12">
+          {{ form.iframe_en.errors }}
+          <label class="strong">iFrame</label>
+          {{ form.iframe_en }}
+        </div>
+        <div class="col-12">
           <div class="row">
             <div class="col-12">
               {{ form.description_en.errors }}
-              <label>Description</label>
+              <label class="strong">Description</label>
             </div>
             <div class="col-12">
               {{ form.description_en }}
             </div>
           </div>
         </div>
-      </div>
-      <!-- Thumbnail upload -->
-      <div class="row section">
-        <div class="col-10">
-          {{ form.thumbnail }}
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              {{ form.info_en.errors }}
+              <label class="strong">Info</label>
+            </div>
+            <div class="col-12">
+              {{ form.info_en }}
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              {{ form.source_en.errors }}
+              <label class="strong">Source</label>
+            </div>
+            <div class="col-12">
+              {{ form.source_en }}
+            </div>
+          </div>
         </div>
       </div>
+      
+      <!-- Thumbnail upload -->
+      <div class="row section">
+        <div class="col-12">
+          <label class="strong">Thumbnail</label>
+          <div class="row">
+            <div class="col-10">
+              {{ form.thumbnail }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row section">
         <div class="col-12">
           <button class="btn btn-primary" type="submit" value="Submit">Save</button>
