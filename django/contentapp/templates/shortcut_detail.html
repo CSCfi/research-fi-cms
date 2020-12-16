@@ -2,22 +2,22 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'contentApp/css/style.css' %}">
-    <script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+<script type="text/javascript">
 
-    </script>
-    <div class="row justify-content-center">
-        <div class="col-6 shortcut">
-            <div class="cover-img">
-                {% if object.image %}
-                <img src="{{ object.image.url }}">
-                {% endif %}
-            </div>
-            <div class="caption text-center">
-                <h2>{{object.title_fi}}</h2>
-                <span>{{ object.content_fi|safe }}</span>
-            </div>
-        </div>
+</script>
+<div class="row justify-content-center">
+  <div class="col-6 shortcut">
+    <div class="cover-img">
+      {% if object.image %}
+      <img src="{{ object.image.url }}">
+      {% endif %}
     </div>
+    <div class="caption text-center">
+      <h2>{{object.title_fi}}</h2>
+      <span>{{ object.content_fi|safe }}</span>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

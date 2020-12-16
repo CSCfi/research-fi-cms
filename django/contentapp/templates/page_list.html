@@ -2,24 +2,24 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'content/css/style.css' %}">
-    <div class="row">
-        <div class="col">
-            <h1>Pages</h1>
+<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+<div class="row">
+  <div class="col">
+    <h1>Pages</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="row list-group">
+      {% for page in object_list %}
+      <div class="col list-group-item">
+        <div class="row d-flex justify-content-between">
+          <div class="col-10">{{ page.title_fi }}</div>
+          <div class="col-auto"><a href="{% url "page_edit" page.id %}">edit</a></div>
         </div>
+      </div>
+      {% endfor %}
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="row list-group">
-                {% for page in object_list %}
-                <div class="col list-group-item">
-                    <div class="row d-flex justify-content-between">
-                        <div class="col-10">{{ page.title_fi }}</div>
-                        <div class="col-auto"><a href="{% url "page_edit" page.id %}">edit</a></div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+  </div>
+</div>
 {% endblock %}

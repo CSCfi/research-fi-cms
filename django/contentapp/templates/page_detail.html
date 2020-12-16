@@ -3,54 +3,54 @@
 
 {% block content %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'content/css/style.css' %}">
-    <div class="row">
-        <div class="col-2">
-            Choose language:
-        </div>
-        <div class="col-1">
-            <select  class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
-                <option value="fi">Fi</option>
-                <option value="sv">Sv</option>
-                <option value="en">En</option>>
-            </select>
-        </div>
-    </div>
+<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+<div class="row">
+  <div class="col-2">
+    Choose language:
+  </div>
+  <div class="col-1">
+    <select class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
+      <option value="fi">Fi</option>
+      <option value="sv">Sv</option>
+      <option value="en">En</option>>
+    </select>
+  </div>
+</div>
 
-    <script>
-        function changeLang(val) {
-            var fiTitle = '{{ object.title_fi }}';
-            var svTitle = '{{ object.title_sv }}';
-            var enTitle = '{{ object.title_en }}';
+<script>
+  function changeLang(val) {
+    var fiTitle = '{{ object.title_fi }}';
+    var svTitle = '{{ object.title_sv }}';
+    var enTitle = '{{ object.title_en }}';
 
-            switch (val) {
-                case 'sv': {
-                    document.getElementById("title").innerHTML = svTitle;
-                    document.getElementById("content_fi").style.display = "none";
-                    document.getElementById("content_sv").style.display = "block";
-                    document.getElementById("content_en").style.display = "none";
-                    break;
-                }
-                case 'en': {
-                    document.getElementById("title").innerHTML = enTitle;
-                    document.getElementById("content_fi").style.display = "none";
-                    document.getElementById("content_sv").style.display = "none";
-                    document.getElementById("content_en").style.display = "block";
-                    break;
-                }
-                default: {
-                    document.getElementById("title").innerHTML = fiTitle;
-                    document.getElementById("content_fi").style.display = "block";
-                    document.getElementById("content_sv").style.display = "none";
-                    document.getElementById("content_en").style.display = "none";
-                }
-            }
-        }
-    </script>
+    switch (val) {
+      case 'sv': {
+        document.getElementById("title").innerHTML = svTitle;
+        document.getElementById("content_fi").style.display = "none";
+        document.getElementById("content_sv").style.display = "block";
+        document.getElementById("content_en").style.display = "none";
+        break;
+      }
+      case 'en': {
+        document.getElementById("title").innerHTML = enTitle;
+        document.getElementById("content_fi").style.display = "none";
+        document.getElementById("content_sv").style.display = "none";
+        document.getElementById("content_en").style.display = "block";
+        break;
+      }
+      default: {
+        document.getElementById("title").innerHTML = fiTitle;
+        document.getElementById("content_fi").style.display = "block";
+        document.getElementById("content_sv").style.display = "none";
+        document.getElementById("content_en").style.display = "none";
+      }
+    }
+  }
+</script>
 
-    <h1 id="title">{{object.title_fi}}</h1>
-    <div id="content_fi">{{ object.content_fi|safe }}</div>
-    <div id="content_sv" style="display: none;">{{ object.content_sv|safe }}</div>
-    <div id="content_en" style="display: none;">{{ object.content_en|safe }}</div>
+<h1 id="title">{{object.title_fi}}</h1>
+<div id="content_fi">{{ object.content_fi|safe }}</div>
+<div id="content_sv" style="display: none;">{{ object.content_sv|safe }}</div>
+<div id="content_en" style="display: none;">{{ object.content_en|safe }}</div>
 
 {% endblock %}
