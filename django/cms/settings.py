@@ -80,6 +80,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://researchfi-test-sv.rahtiapp.fi",
     "https://researchfi-releasetest.rahtiapp.fi",
     "https://researchfi-production-staging.rahtiapp.fi",
+    "https://researchfi-test-productiondata.rahtiapp.fi",
     "https://tiedejatutkimus.fi",
     "https://forskning.fi",
     "https://research.fi",
