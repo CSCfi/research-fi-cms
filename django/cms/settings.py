@@ -84,6 +84,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://tiedejatutkimus.fi",
     "https://forskning.fi",
     "https://research.fi",
+    "https://www.tiedejatutkimus.fi",
+    "https://www.forskning.fi",
+    "https://www.research.fi",
 ]
 
 ROOT_URLCONF = 'cms.urls'
