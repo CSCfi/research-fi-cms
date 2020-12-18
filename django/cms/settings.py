@@ -75,16 +75,11 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:8080",
-    "https://tiedejatutkimus.fi",
-    "https://forskning.fi",
-    "https://research.fi",
-    "https://www.tiedejatutkimus.fi",
-    # "https://www.forskning.fi",
-    # "https://www.research.fi",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://\w+\.rahtiapp\.fi$",
+    r"^https://\w+\.tiedejatutkimus\.fi$",
     r"^https://\w+\.forskning\.fi$",
     r"^https://\w+\.research\.fi$",
 ]
