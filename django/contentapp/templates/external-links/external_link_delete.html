@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Delete external link</h1>
+<form method="post">{% csrf_token %}
+  <div class="row">
+    <div class="col">
+      Are you sure you want to delete link for "{{ object.label_fi }}" ?
+    </div>
+  </div>
+
+  <div class="row section pt-4">
+    <div class="col-12">
+      <button class="btn btn-danger" type="submit" value="Submit">Delete</button>
+      <a href="/external-links"><button class="btn btn-secondary" type="button" value="Cancel">Cancel</button></a>
+    </div>
+  </div>
+</form>
+{% endblock %}
