@@ -1,0 +1,124 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+
+<div class="row">
+  <div class="col">
+    <h1>Add external link</h1>
+    <div class="row">
+      <div class="col-2">
+        Choose language:
+      </div>
+      <div class="col-1">
+        <select class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
+          <option value="fi">Fi</option>
+          <option value="sv">Sv</option>
+          <option value="en">En</option>>
+        </select>
+      </div>
+    </div>
+
+    <script>
+      function changeLang(val) {
+        var fi_form = document.getElementById("fi");
+        var sv_form = document.getElementById("sv");
+        var en_form = document.getElementById("en");
+        var currentLang = ''
+
+        switch (val) {
+          case 'sv': {
+            sv_form.style.display = "block";
+            fi_form.style.display = "none";
+            en_form.style.display = "none";
+            break;
+          }
+          case 'en': {
+            en_form.style.display = "block";
+            fi_form.style.display = "none";
+            sv_form.style.display = "none";
+            break;
+          }
+          default: {
+            fi_form.style.display = "block";
+            sv_form.style.display = "none";
+            en_form.style.display = "none";
+          }
+        }
+      }
+    </script>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      {{ form.media }}
+      {{ form.non_field_errors }}
+      <div class="row">
+        <div class="col-2">
+          Choose parent
+        </div>
+        <div class="col-3">
+          {{ form.parent }}
+        </div>
+      </div>
+
+      <!-- Finnish content -->
+      <div id="fi" class="row section">
+        <div class="col-12">
+          {{ form.label_fi.errors }}
+          <label class="strong">Label</label>
+          {{ form.label_fi }}
+          <label id="testTitle"></label>
+        </div>
+        <div class="col-12">
+          {{ form.content_fi.errors }}
+          <label class="strong">Content</label>
+          {{ form.content_fi }}
+        </div>
+      </div>
+
+      <!-- Swedish content -->
+      <div id="sv" class="row section" style="display: none;">
+        <div class="col-12 pb-4">
+          {{ form.label_sv.errors }}
+          <label class="strong">Label</label>
+          {{ form.label_sv }}
+        </div>
+        <div class="col-12">
+          {{ form.content_sv.errors }}
+          <label class="strong">Content</label>
+          {{ form.content_sv }}
+        </div>
+      </div>
+
+      <!-- English content -->
+      <div id="en" class="row section" style="display: none;">
+        <div class="col-12 pb-4">
+          {{ form.label_en.errors }}
+          <label class="strong">Label</label>
+          {{ form.label_en }}
+        </div>
+        <div class="col-12">
+          {{ form.content_en.errors }}
+          <label class="strong">Content</label>
+          {{ form.content_en }}
+        </div>
+      </div>
+      
+      <div class="row section">
+        <div class="col-12">
+          {{ form.url.errors }}
+          <label class="strong">Link target</label>
+          {{ form.url }}
+        </div>
+      </div>
+
+      <div class="row section">
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit" value="Submit">Save</button>
+          <a href="/external-links"><button class="btn btn-secondary" type="button" value="Cancel">Cancel</button></a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
