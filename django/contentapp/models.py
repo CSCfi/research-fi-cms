@@ -113,6 +113,9 @@ class SingleFigure(OrderedModelBase):
     info_sv = RichTextUploadingField(blank=True)
     info_en = RichTextUploadingField(blank=True)
     roadmap = models.BooleanField(default=False)
+    visual_file_fi = models.FileField(upload_to="visuals/", null=True, blank=True)
+    visual_file_sv = models.FileField(upload_to="visuals/", null=True, blank=True)
+    visual_file_en = models.FileField(upload_to="visuals/", null=True, blank=True)
 
     class Meta:
         ordering = ["figure", "placement_id"]

@@ -67,6 +67,9 @@ class SingleFigureSerializer(serializers.ModelSerializer):
             "info_sv",
             "info_en",
             "roadmap",
+            "visual_file_fi",
+            "visual_file_sv",
+            "visual_file_en",
         ]
 
 

@@ -67,6 +67,9 @@ class SingleFigureForm(forms.ModelForm):
             "info_sv",
             "info_en",
             "roadmap",
+            "visual_file_fi",
+            "visual_file_sv",
+            "visual_file_en",
         ]
 
     def __init__(self, *args, **kwargs):
