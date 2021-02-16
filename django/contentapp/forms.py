@@ -124,7 +124,9 @@ class ExternalLinkForm(forms.ModelForm):
             "content_fi",
             "content_sv",
             "content_en",
-            "url",
+            "url_fi",
+            "url_sv",
+            "url_en",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -144,7 +146,9 @@ class ExternalLinkAddForm(forms.ModelForm):
             "content_fi",
             "content_sv",
             "content_en",
-            "url",
+            "url_fi",
+            "url_sv",
+            "url_en",
         ]
 
     def __init__(self, *args, **kwargs):

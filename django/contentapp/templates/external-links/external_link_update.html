@@ -1,21 +1,26 @@
-{% extends "base_generic.html" %}
-{% load static %}
-
-{% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+{% extends "base_generic.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'contentapp/css/style.css' %}"
+/>
 
 <div class="row">
   <div class="col">
     <h1>External link Edit</h1>
     <div class="row">
-      <div class="col-2">
-        Choose language:
-      </div>
+      <div class="col-2">Choose language:</div>
       <div class="col-1">
-        <select class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
+        <select
+          class="form-control"
+          name="langs"
+          id="langs"
+          onchange="changeLang(this.value)"
+        >
           <option value="fi">Fi</option>
           <option value="sv">Sv</option>
-          <option value="en">En</option>>
+          <option value="en">En</option>
+          >
         </select>
       </div>
     </div>
@@ -27,13 +32,13 @@
         var en_editor = document.getElementById("en");
 
         switch (val) {
-          case 'sv': {
+          case "sv": {
             fi_editor.style.display = "none";
             sv_editor.style.display = "block";
             en_editor.style.display = "none";
             break;
           }
-          case 'en': {
+          case "en": {
             fi_editor.style.display = "none";
             sv_editor.style.display = "none";
             en_editor.style.display = "block";
@@ -48,9 +53,8 @@
       }
     </script>
 
-    <form method="post" enctype="multipart/form-data">{% csrf_token %}
-      {{ form.media }}
-      {{ form.non_field_errors }}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.media }} {{ form.non_field_errors }}
 
       <!-- Finnish form elements -->
       <div id="fi">
@@ -68,10 +72,17 @@
             <div id="title">{{ form.content_fi }}</div>
           </div>
         </div>
+        <div class="row section">
+          <div class="col-12">
+            {{ form.url_fi.errors }}
+            <label class="font-weight-bold">Link target</label>
+            <div id="title">{{ form.url_fi }}</div>
+          </div>
+        </div>
       </div>
 
       <!-- Swedish form elements -->
-      <div id="sv" style="display: none;">
+      <div id="sv" style="display: none">
         <div class="row section">
           <div class="col-12">
             {{ form.label_sv.errors }}
@@ -86,10 +97,17 @@
             <div id="title">{{ form.content_sv }}</div>
           </div>
         </div>
+        <div class="row section">
+          <div class="col-12">
+            {{ form.url_sv.errors }}
+            <label class="font-weight-bold">Link target</label>
+            <div id="title">{{ form.url_sv }}</div>
+          </div>
+        </div>
       </div>
 
       <!-- English form elements -->
-      <div id="en" style="display: none;">
+      <div id="en" style="display: none">
         <div class="row section">
           <div class="col-12">
             {{ form.label_en.errors }}
@@ -104,21 +122,25 @@
             <div id="title">{{ form.content_en }}</div>
           </div>
         </div>
-      </div>
-
-      <!-- Link to orgId -->
-      <div class="row section">
-        <div class="col-12">
-          {{ form.url.errors }}
-          <label class="strong">Link target</label>
-          {{ form.url }}
+        <div class="row section">
+          <div class="col-12">
+            {{ form.url_en.errors }}
+            <label class="font-weight-bold">Link target</label>
+            <div id="title">{{ form.url_en }}</div>
+          </div>
         </div>
       </div>
 
       <div class="row section">
         <div class="col-12">
-          <button class="btn btn-primary" type="submit" value="Submit">Update</button>
-          <a href="/external-links"><button class="btn btn-secondary" type="button" value="Cancel">Cancel</button></a>
+          <button class="btn btn-primary" type="submit" value="Submit">
+            Update
+          </button>
+          <a href="/external-links"
+            ><button class="btn btn-secondary" type="button" value="Cancel">
+              Cancel
+            </button></a
+          >
         </div>
       </div>
     </form>
