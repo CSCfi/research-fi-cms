@@ -196,7 +196,9 @@ class ExternalLink(OrderedModelBase):
     content_fi = models.CharField(max_length=1000, default="Enter content")
     content_sv = models.CharField(max_length=1000, default="Enter content")
     content_en = models.CharField(max_length=1000, default="Enter content")
-    url = models.URLField(max_length=500, help_text="Enter link target")
+    url_fi = models.URLField(max_length=500, help_text="Enter link target")
+    url_sv = models.URLField(max_length=500, null=True, help_text="Enter link target")
+    url_en = models.URLField(max_length=500, null=True, help_text="Enter link target")
 
     class Meta:
         ordering = ["parent", "placement_id"]

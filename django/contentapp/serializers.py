@@ -122,7 +122,9 @@ class ExternalLinkSerializer(serializers.ModelSerializer):
             "content_fi",
             "content_sv",
             "content_en",
-            "url",
+            "url_fi",
+            "url_sv",
+            "url_en",
         ]
 
 
