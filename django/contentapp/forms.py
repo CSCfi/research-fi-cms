@@ -70,6 +70,7 @@ class SingleFigureForm(forms.ModelForm):
             "visual_file_fi",
             "visual_file_sv",
             "visual_file_en",
+            "update_date",
         ]
 
     def __init__(self, *args, **kwargs):
