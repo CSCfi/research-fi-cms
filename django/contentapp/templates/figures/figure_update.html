@@ -109,6 +109,13 @@
             <div class="col-10">{{ form.visual_file_fi }}</div>
           </div>
         </div>
+        <div class="col-12">
+          {{ form.visual_update_date_fi.errors }}
+          <label class="strong">Visual update date</label>
+          <div class="row">
+            <div class="col-10">{{ form.visual_update_date_fi }}</div>
+          </div>
+        </div>
       </div>
 
       <!-- Swedish content -->
@@ -157,6 +164,13 @@
           <div class="row">
             {% if form.instance.visual_file_sv %} {% endif %}
             <div class="col-10">{{ form.visual_file_sv }}</div>
+          </div>
+        </div>
+        <div class="col-12">
+          {{ form.visual_update_date_sv.errors }}
+          <label class="strong">Visual update date</label>
+          <div class="row">
+            <div class="col-10">{{ form.visual_update_date_sv }}</div>
           </div>
         </div>
       </div>
@@ -209,6 +223,13 @@
             <div class="col-10">{{ form.visual_file_en }}</div>
           </div>
         </div>
+        <div class="col-12">
+          {{ form.visual_update_date_en.errors }}
+          <label class="strong">Visual update date</label>
+          <div class="row">
+            <div class="col-10">{{ form.visual_update_date_en }}</div>
+          </div>
+        </div>
       </div>
 
       <!-- Thumbnail upload -->
@@ -231,14 +252,6 @@
           {{ form.roadmap.errors }}
           <label class="font-weight-bold">Roadmap</label>
           {{ form.roadmap }}
-        </div>
-      </div>
-
-      <div class="row section">
-        <div class="col-12">
-          {{ form.update_date.errors }}
-          <label class="font-weight-bold">Update date</label>
-          {{ form.update_date }}
         </div>
       </div>
 
