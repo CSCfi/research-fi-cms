@@ -226,6 +226,14 @@
 
       <div class="row section">
         <div class="col-12">
+          {{ form.update_date.errors }}
+          <label class="font-weight-bold">Update date</label>
+          {{ form.update_date }}
+        </div>
+      </div>
+
+      <div class="row section">
+        <div class="col-12">
           <button class="btn btn-primary" type="submit" value="Submit">
             Save
           </button>

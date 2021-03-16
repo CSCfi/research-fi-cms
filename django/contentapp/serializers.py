@@ -70,6 +70,7 @@ class SingleFigureSerializer(serializers.ModelSerializer):
             "visual_file_fi",
             "visual_file_sv",
             "visual_file_en",
+            "update_date",
         ]
 
 
