@@ -116,7 +116,9 @@ class SingleFigure(OrderedModelBase):
     visual_file_fi = models.FileField(upload_to="visuals/", null=True, blank=True)
     visual_file_sv = models.FileField(upload_to="visuals/", null=True, blank=True)
     visual_file_en = models.FileField(upload_to="visuals/", null=True, blank=True)
-    update_date = models.CharField(max_length=100, null=True)
+    visual_update_date_fi = models.CharField(max_length=100, blank=True)
+    visual_update_date_sv = models.CharField(max_length=100, blank=True)
+    visual_update_date_en = models.CharField(max_length=100, blank=True)
 
     class Meta:
         ordering = ["figure", "placement_id"]
