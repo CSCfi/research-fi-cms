@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "ckeditor_uploader",
     "ordered_model",
+    "dbbackup",
 ]
 
 MIDDLEWARE = [
@@ -187,6 +188,18 @@ MEDIA_ROOT = "/cmsvolume/media/"
 # Login settings
 
 LOGIN_REDIRECT_URL = "/"
+
+
+# Django-dbbackup settings https://django-dbbackup.readthedocs.io/en/master/installation.html
+DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
+DBBACKUP_STORAGE_OPTIONS = {
+    "location": "/cmsvolume/dbbackup/"
+}
+
+# Basic auth configuration, used for protecting backup endpoint
+BASICAUTH_USERS = {
+    os.environ.get("DJANGO_ENV_BACKUP_HTTP_AUTH_USERNAME"): os.environ.get("DJANGO_ENV_BACKUP_HTTP_AUTH_PASSWORD")
+}
 
 # Import local settings, if defined.
 # Local settings can be used to overwrite values in development and testing environments.
