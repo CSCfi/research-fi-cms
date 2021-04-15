@@ -139,6 +139,16 @@ objects:
                   secretKeyRef:
                     name: cms-django-secret
                     key: django_env_static_url
+              - name: DJANGO_ENV_BACKUP_HTTP_AUTH_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_backup_http_auth_username
+              - name: DJANGO_ENV_BACKUP_HTTP_AUTH_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: cms-django-secret
+                    key: django_env_backup_http_auth_password
             volumeMounts:
               - mountPath: /cmsvolume
                 name: cmsvolume
