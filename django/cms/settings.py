@@ -195,6 +195,16 @@ DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 DBBACKUP_STORAGE_OPTIONS = {
     "location": "/cmsvolume/dbbackup/"
 }
+DBBACKUP_CONNECTORS = {
+    "default": {
+        "ENGINE": "dbbackup.db.postgresql.PgDumpBinaryConnector",
+        "HOST": os.environ.get("DJANGO_ENV_DATABASE_HOST"),
+        "PORT": os.environ.get("DJANGO_ENV_DATABASE_PORT"),
+        "NAME": os.environ.get("DJANGO_ENV_DATABASE_NAME"),
+        "USER": os.environ.get("DJANGO_ENV_DATABASE_USER"),
+        "PASSWORD": os.environ.get("DJANGO_ENV_DATABASE_PASSWORD"),
+    }
+}
 
 # Basic auth configuration, used for protecting backup endpoint
 BASICAUTH_USERS = {
