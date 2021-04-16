@@ -30,7 +30,8 @@ livereload==2.6.2
 Markdown==3.2.2
 mccabe==0.6.1
 Pillow==8.1.2
-psycopg2==2.8.6
+psycopg2
+psycopg2-binary
 pylint==2.5.3
 pytz==2020.1
 six==1.15.0
