@@ -49,18 +49,14 @@ objects:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
         ref: devel
-      contextDir: django
+      contextDir: .
     strategy:
-      sourceStrategy:
-        from:
-          kind: DockerImage
-          name: docker-registry.default.svc:5000/researchfi/python-36-centos7
+      dockerStrategy:
+        dockerfilePath: openshift/Dockerfile
         env:
-          - name: ENABLE_PIPENV
-            value: "true"
           - name: APP_MODULE
             value: "cms.wsgi:application"
-          - name: DISABLE_SETUP_PY_PROCESSING
+          - name: DISABLE_COLLECTSTATIC
             value: "true"
     output:
       to:
