@@ -205,6 +205,8 @@ DBBACKUP_CONNECTORS = {
         "PASSWORD": os.environ.get("DJANGO_ENV_DATABASE_PASSWORD"),
     }
 }
+DBBACKUP_CLEANUP_KEEP = 7
+DBBACKUP_CLEANUP_KEEP_MEDIA = 7
 
 # Basic auth configuration, used for protecting backup endpoint
 BASICAUTH_USERS = {
