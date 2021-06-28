@@ -90,6 +90,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.tiedejatutkimus.fi",
     "https://www.forskning.fi",
     "https://www.research.fi",
+    "https://researchfi-mydata.rahtiapp.fi",
+    "https://researchfi-mydata-en.rahtiapp.fi",
+    "https://researchfi-mydata-sv.rahtiapp.fi",
 ]
 
 ROOT_URLCONF = "cms.urls"
