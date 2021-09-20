@@ -163,6 +163,9 @@ class Organization(OrderedModelBase):
     name_sv = models.CharField(max_length=500, default="Enter organization name")
     name_en = models.CharField(max_length=500, default="Enter organization name")
     link = models.CharField(max_length=500, default="Enter link target")
+    iframe_fi = models.CharField(max_length=500, blank=True)
+    iframe_sv = models.CharField(max_length=500, blank=True)
+    iframe_en = models.CharField(max_length=500, blank=True)
 
     class Meta:
         ordering = ["sector", "placement_id"]
