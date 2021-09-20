@@ -1,21 +1,26 @@
-{% extends "base_generic.html" %}
-{% load static %}
-
-{% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
+{% extends "base_generic.html" %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'contentapp/css/style.css' %}"
+/>
 
 <div class="row">
   <div class="col">
     <h1>Organization Edit</h1>
     <div class="row">
-      <div class="col-2">
-        Choose language:
-      </div>
+      <div class="col-2">Choose language:</div>
       <div class="col-1">
-        <select class="form-control" name="langs" id="langs" onchange="changeLang(this.value)">
+        <select
+          class="form-control"
+          name="langs"
+          id="langs"
+          onchange="changeLang(this.value)"
+        >
           <option value="fi">Fi</option>
           <option value="sv">Sv</option>
-          <option value="en">En</option>>
+          <option value="en">En</option>
+          >
         </select>
       </div>
     </div>
@@ -26,18 +31,18 @@
         var sv_editor = document.getElementById("sv");
         var en_editor = document.getElementById("en");
 
-        var fiTitle = '{{ form.title_fi }}';
-        var svTitle = '{{ form.title_sv }}';
-        var enTitle = '{{ form.title_en }}';
+        var fiTitle = "{{ form.title_fi }}";
+        var svTitle = "{{ form.title_sv }}";
+        var enTitle = "{{ form.title_en }}";
 
         switch (val) {
-          case 'sv': {
+          case "sv": {
             fi_editor.style.display = "none";
             sv_editor.style.display = "block";
             en_editor.style.display = "none";
             break;
           }
-          case 'en': {
+          case "en": {
             fi_editor.style.display = "none";
             sv_editor.style.display = "none";
             en_editor.style.display = "block";
@@ -52,39 +57,56 @@
       }
     </script>
 
-    <form method="post" enctype="multipart/form-data">{% csrf_token %}
-      {{ form.media }}
-      {{ form.non_field_errors }}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.media }} {{ form.non_field_errors }}
 
       <!-- Finnish form elements -->
       <div id="fi">
         <div class="row section">
-          <div class="col-12">
+          <div class="col-12 pb-4">
             {{ form.name_fi.errors }}
             <label class="font-weight-bold">Title</label>
             <div id="title">{{ form.name_fi }}</div>
+          </div>
+
+          <div class="col-12">
+            {{ form.iframe_fi.errors }}
+            <label class="font-weight-bold">iFrame URL (visualization)</label>
+            <div id="title">{{ form.iframe_fi }}</div>
           </div>
         </div>
       </div>
 
       <!-- Swedish form elements -->
-      <div id="sv" style="display: none;">
+      <div id="sv" style="display: none">
         <div class="row section">
-          <div class="col-12">
+          <div class="col-12 pb-4">
             {{ form.name_sv.errors }}
             <label class="font-weight-bold">Title</label>
             <div id="title">{{ form.name_sv }}</div>
+          </div>
+
+          <div class="col-12">
+            {{ form.iframe_sv.errors }}
+            <label class="font-weight-bold">iFrame URL (visualization)</label>
+            <div id="title">{{ form.iframe_sv }}</div>
           </div>
         </div>
       </div>
 
       <!-- English form elements -->
-      <div id="en" style="display: none;">
+      <div id="en" style="display: none">
         <div class="row section">
-          <div class="col-12">
+          <div class="col-12 pb-4">
             {{ form.name_en.errors }}
             <label class="font-weight-bold">Title</label>
             <div id="title">{{ form.name_en }}</div>
+          </div>
+
+          <div class="col-12">
+            {{ form.iframe_en.errors }}
+            <label class="font-weight-bold">iFrame URL (visualization)</label>
+            <div id="title">{{ form.iframe_en }}</div>
           </div>
         </div>
       </div>
@@ -100,8 +122,14 @@
 
       <div class="row section">
         <div class="col-12">
-          <button class="btn btn-primary" type="submit" value="Submit">Update</button>
-          <a href="/organizations"><button class="btn btn-secondary" type="button" value="Cancel">Cancel</button></a>
+          <button class="btn btn-primary" type="submit" value="Submit">
+            Update
+          </button>
+          <a href="/organizations"
+            ><button class="btn btn-secondary" type="button" value="Cancel">
+              Cancel
+            </button></a
+          >
         </div>
       </div>
     </form>

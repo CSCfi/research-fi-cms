@@ -87,7 +87,16 @@ class FigureSerializer(serializers.ModelSerializer):
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = ["placement_id", "name_fi", "name_sv", "name_en", "link"]
+        fields = [
+            "placement_id",
+            "name_fi",
+            "name_sv",
+            "name_en",
+            "link",
+            "iframe_fi",
+            "iframe_sv",
+            "iframe_en",
+        ]
 
 
 class SectorSerializer(serializers.ModelSerializer):

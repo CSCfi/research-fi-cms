@@ -84,7 +84,15 @@ class SingleFigureForm(forms.ModelForm):
 class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
-        fields = ["name_fi", "name_sv", "name_en", "link"]
+        fields = [
+            "name_fi",
+            "name_sv",
+            "name_en",
+            "link",
+            "iframe_fi",
+            "iframe_sv",
+            "iframe_en",
+        ]
 
     def __init__(self, *args, **kwargs):
         super(OrganizationForm, self).__init__(*args, **kwargs)
