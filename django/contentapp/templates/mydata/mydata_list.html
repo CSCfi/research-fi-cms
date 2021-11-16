@@ -5,18 +5,18 @@
 <link rel="stylesheet" type="text/css" href="{% static 'contentapp/css/style.css' %}">
 <div class="row">
   <div class="col">
-    <h1>Pages</h1>
+    <h1>MyData</h1>
   </div>
 </div>
 <div class="row">
   <div class="col">
     <div class="row list-group">
       {% for page in object_list %}
-        {% if not 'mydata_' in page.page_id %}
+        {% if 'mydata_' in page.page_id %}
         <div class="col list-group-item">
           <div class="row d-flex justify-content-between">
             <div class="col-10">{{ page.title_fi }}</div>
-            <div class="col-auto"><a href="{% url "page_edit" page.id %}">edit</a></div>
+            <div class="col-auto"><a href="{% url "mydata_edit" page.id %}">edit</a></div>
           </div>
         </div>
         {% endif %}

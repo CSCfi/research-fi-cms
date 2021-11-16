@@ -322,3 +322,19 @@ class OtherLinkDelete(LoginRequiredMixin, DeleteView):
     model = ExternalLink
     template_name = "external-links/external_link_delete.html"
     success_url = reverse_lazy("external_link_list")
+
+
+# MyData text content
+class MyDataList(LoginRequiredMixin, ListView):
+    model = Page
+    template_name = "mydata/mydata_list.html"
+
+
+@login_required(login_url="/accounts/login/")
+def mydata_edit(request, pk, template_name="mydata/mydata_edit.html"):
+    page = get_object_or_404(Page, pk=pk)
+    form = PageForm(request.POST or None, instance=page)
+    if form.is_valid():
+        form.save()
+        return redirect("mydata_list")
+    return render(request, template_name, {"form": form})

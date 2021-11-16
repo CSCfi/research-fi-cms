@@ -39,6 +39,9 @@
         <li {% if "/external-links/" in request.path %}class="active nav-item" {% else%} class="nav-item" {% endif %}>
           <a class="nav-link" href="/external-links/">External links</a>
         </li>
+        <li {% if "/mydata/" in request.path %}class="active nav-item" {% else%} class="nav-item" {% endif %}>
+          <a class="nav-link" href="/mydata/">MyData</a>
+        </li>
       </ul>
       <a href="/accounts/logout">
         <button class="btn btn-secondary" type="submit">Log out</button>
