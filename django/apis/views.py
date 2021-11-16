@@ -11,7 +11,7 @@ from contentapp.serializers import (
 
 
 class PageViewSet(viewsets.ModelViewSet):
-    queryset = Page.objects.all()
+    queryset = Page.objects.exclude(page_id__contains="mydata_")
     serializer_class = PageSerializer
 
 
@@ -33,3 +33,8 @@ class SectorViewSet(viewsets.ModelViewSet):
 class ExternalLinkViewSet(viewsets.ModelViewSet):
     queryset = ExternalLinksParent.objects.all()
     serializer_class = ExternalLinksParentSerializer
+
+
+class MyDataViewSet(viewsets.ModelViewSet):
+    queryset = Page.objects.filter(page_id__contains="mydata_")
+    serializer_class = PageSerializer

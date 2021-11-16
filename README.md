@@ -1,7 +1,9 @@
 # research-fi-cms
+
 Github repository for research.fi Content Management System
 
 # Installation
+
 ```
 cd django
 python -m pip install --upgrade pip
@@ -9,13 +11,16 @@ pip install -r requirements.txt
 ```
 
 # Local development
+
 By default the app uses production settings and PostgreSQL database engine.
 For local development add a settings file overriding settings.py values
+
 ```
 django/cms/local_settings.py
 ```
 
 Example content
+
 ```
 from pathlib import Path
 
@@ -30,6 +35,10 @@ DATABASES = {
 DEBUG = True
 STATIC_URL = "static/"
 STATIC_ROOT = "static/"
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 ```
+
+# Developer notes
+
+MyData content is handled with Page model. All MyData content should have page id with prefix "mydata\_". API endpoint for /mydata filters content according to this prefix.

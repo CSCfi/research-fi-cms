@@ -34,4 +34,6 @@ urlpatterns = [
         views.OtherLinkDelete.as_view(),
         name="external_link_delete",
     ),
+    path("mydata/", views.MyDataList.as_view(), name="mydata_list"),
+    path("mydata/edit/<int:pk>", views.mydata_edit, name="mydata_edit"),
 ]
