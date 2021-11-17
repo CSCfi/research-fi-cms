@@ -6,7 +6,7 @@ from .views import (
     FigureViewSet,
     SectorViewSet,
     ExternalLinkViewSet,
-    MyDataViewSet,
+    # MyDataViewSet,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -17,5 +17,5 @@ router.register(r"shortcuts", ShortcutViewSet)
 router.register(r"figures", FigureViewSet)
 router.register(r"sectors", SectorViewSet)
 router.register(r"external_links", ExternalLinkViewSet)
-router.register(r"mydata", MyDataViewSet)
+# router.register(r"mydata", MyDataViewSet)
 urlpatterns = router.urls
