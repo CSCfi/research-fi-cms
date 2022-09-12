@@ -10,7 +10,7 @@ USER 0
 
 # Install PostgreSQL client
 RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-RUN yum install -y postgresql96
+RUN yum install -y postgresql14
 
 ADD django /tmp/src
 # RUN rm -f /tmp/src/cms/local_settings.py
