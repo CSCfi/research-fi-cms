@@ -48,7 +48,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: devel
+        ref: use_whitenoise_static_file_server
       contextDir: nginx
     strategy:
       dockerStrategy:
@@ -79,7 +79,7 @@ objects:
       spec:
         containers:
           - name: cms-nginx
-            image: researchfi/cms-nginx
+            image: ts/cms-nginx
             imagePullPolicy: Always
             ports:
               - containerPort: 8080
@@ -90,7 +90,7 @@ objects:
         volumes:
           - name: cmsvolume
             persistentVolumeClaim:
-              claimName: cms-volume
+              claimName: cms-volume-rwo
     replicas: 1
     triggers:
     - type: ConfigChange
