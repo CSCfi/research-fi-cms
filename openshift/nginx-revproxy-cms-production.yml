@@ -1,0 +1,99 @@
+# Copyright 2022 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+apiVersion: v1
+kind: Template
+metadata:
+  labels:
+    app: nginx-revproxy-cms-production
+    template: nginx-revproxy-cms-production
+  name: nginx-revproxy-cms-production
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+    annotations:
+      description: Nginx reverse proxy for CMS content
+  spec:
+    ports:
+      - name: nginx
+        port: 8080
+        targetPort: 8080
+    selector:
+      depcfg: nginx-revproxy-cms-production
+
+# ImageStream
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+
+# BuildConfig using Docker build strategy
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: cms-nginx
+    labels:
+      app: nginx-revproxy-cms-production
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: use_whitenoise_static_file_server
+      contextDir: nginx/production
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile_production
+    output:
+      to:
+        kind: ImageStreamTag
+        name: nginx-revproxy-cms-production:latest
+    successfulBuildsHistoryLimit: 4 
+    failedBuildsHistoryLimit: 4
+
+# Deployment config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+  spec:
+    selector:
+      app: nginx-revproxy-cms-production
+      depcfg: nginx-revproxy-cms-production
+    template:
+      metadata:
+        labels:
+          app: nginx-revproxy-cms-production
+          depcfg: nginx-revproxy-cms-production
+      spec:
+        containers:
+          - name: nginx-revproxy-cms-production
+            image: ts/nginx-revproxy-cms-production
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - nginx-revproxy-cms-production
+        from:
+          kind: ImageStreamTag
+          name: nginx-revproxy-cms-production:latest
+    strategy:
+      type: Rolling
