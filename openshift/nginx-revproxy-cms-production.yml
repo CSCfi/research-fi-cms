@@ -41,7 +41,7 @@ objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: cms-nginx
+    name: nginx-revproxy-cms-production
     labels:
       app: nginx-revproxy-cms-production
   spec:
@@ -52,7 +52,7 @@ objects:
       contextDir: nginx/production
     strategy:
       dockerStrategy:
-        dockerfilePath: Dockerfile_production
+        dockerfilePath: Dockerfile
     output:
       to:
         kind: ImageStreamTag
