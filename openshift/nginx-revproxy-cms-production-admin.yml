@@ -1,0 +1,99 @@
+# Copyright 2022 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+apiVersion: v1
+kind: Template
+metadata:
+  labels:
+    app: nginx-revproxy-cms-production-admin
+    template: nginx-revproxy-cms-production-admin
+  name: nginx-revproxy-cms-production-admin
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx-revproxy-cms-production-admin
+    labels:
+      app: nginx-revproxy-cms-production-admin
+    annotations:
+      description: Nginx reverse proxy for CMS admin
+  spec:
+    ports:
+      - name: nginx
+        port: 8080
+        targetPort: 8080
+    selector:
+      depcfg: nginx-revproxy-cms-production-admin
+
+# ImageStream
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: nginx-revproxy-cms-production-admin
+    labels:
+      app: nginx-revproxy-cms-production-admin
+
+# BuildConfig using Docker build strategy
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: nginx-revproxy-cms-production-admin
+    labels:
+      app: nginx-revproxy-cms-production-admin
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: use_whitenoise_static_file_server
+      contextDir: nginx/production_admin
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+    output:
+      to:
+        kind: ImageStreamTag
+        name: nginx-revproxy-cms-production-admin:latest
+    successfulBuildsHistoryLimit: 4 
+    failedBuildsHistoryLimit: 4
+
+# Deployment config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: nginx-revproxy-cms-production-admin
+    labels:
+      app: nginx-revproxy-cms-production-admin
+  spec:
+    selector:
+      app: nginx-revproxy-cms-production-admin
+      depcfg: nginx-revproxy-cms-production-admin
+    template:
+      metadata:
+        labels:
+          app: nginx-revproxy-cms-production-admin
+          depcfg: nginx-revproxy-cms-production-admin
+      spec:
+        containers:
+          - name: nginx-revproxy-cms-production-admin
+            image: ts/nginx-revproxy-cms-production-admin
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - nginx-revproxy-cms-production-admin
+        from:
+          kind: ImageStreamTag
+          name: nginx-revproxy-cms-production-admin:latest
+    strategy:
+      type: Rolling
