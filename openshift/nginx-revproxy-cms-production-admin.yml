@@ -48,7 +48,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: use_whitenoise_static_file_server
+        ref: CSCTTV-2793_move_django_app_to_pouta
       contextDir: nginx/production_admin
     strategy:
       dockerStrategy:
@@ -57,8 +57,8 @@ objects:
       to:
         kind: ImageStreamTag
         name: nginx-revproxy-cms-production-admin:latest
-    successfulBuildsHistoryLimit: 4 
-    failedBuildsHistoryLimit: 4
+    successfulBuildsHistoryLimit: 2 
+    failedBuildsHistoryLimit: 2
 
 # Deployment config
 - apiVersion: v1
