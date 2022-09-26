@@ -3,13 +3,7 @@
 # :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
 # :license: MIT
 
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: cms-volume
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1G
+# Use non-root version of nginx
+FROM nginxinc/nginx-unprivileged
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8080
