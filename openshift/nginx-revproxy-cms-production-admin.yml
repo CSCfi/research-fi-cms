@@ -48,7 +48,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: CSCTTV-2793_move_django_app_to_pouta
+        ref: devel
       contextDir: nginx/production_admin
     strategy:
       dockerStrategy:
@@ -79,7 +79,7 @@ objects:
       spec:
         containers:
           - name: nginx-revproxy-cms-production-admin
-            image: ts/nginx-revproxy-cms-production-admin
+            image: researchfi/nginx-revproxy-cms-production-admin
             imagePullPolicy: Always
             ports:
               - containerPort: 8080
