@@ -1,0 +1,99 @@
+# Copyright 2023 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+apiVersion: v1
+kind: Template
+metadata:
+  labels:
+    app: nginx-revproxy-cms-devel
+    template: nginx-revproxy-cms-devel
+  name: nginx-revproxy-cms-devel
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx-revproxy-cms-devel
+    labels:
+      app: nginx-revproxy-cms-devel
+    annotations:
+      description: Nginx reverse proxy for CMS content (devel)
+  spec:
+    ports:
+      - name: nginx
+        port: 8080
+        targetPort: 8080
+    selector:
+      depcfg: nginx-revproxy-cms-devel
+
+# ImageStream
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: nginx-revproxy-cms-devel
+    labels:
+      app: nginx-revproxy-cms-devel
+
+# BuildConfig using Docker build strategy
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    name: nginx-revproxy-cms-devel
+    labels:
+      app: nginx-revproxy-cms-devel
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: devel
+      contextDir: nginx/devel
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+    output:
+      to:
+        kind: ImageStreamTag
+        name: nginx-revproxy-cms-devel:latest
+    successfulBuildsHistoryLimit: 2 
+    failedBuildsHistoryLimit: 2
+
+# Deployment config
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: nginx-revproxy-cms-devel
+    labels:
+      app: nginx-revproxy-cms-devel
+  spec:
+    selector:
+      app: nginx-revproxy-cms-devel
+      depcfg: nginx-revproxy-cms-devel
+    template:
+      metadata:
+        labels:
+          app: nginx-revproxy-cms-devel
+          depcfg: nginx-revproxy-cms-devel
+      spec:
+        containers:
+          - name: nginx-revproxy-cms-devel
+            image: researchfi/nginx-revproxy-cms-devel
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - nginx-revproxy-cms-devel
+        from:
+          kind: ImageStreamTag
+          name: nginx-revproxy-cms-devel:latest
+    strategy:
+      type: Rolling
