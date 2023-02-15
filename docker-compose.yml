@@ -1,0 +1,50 @@
+# Copyright 2023 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+# Docker compose file for local development
+
+version: "3.9"
+
+services:
+  django:
+    build:
+      dockerfile: local_development/Dockerfile.django
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./django:/code
+      - /tmp:/cmsvolume
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    environment:
+      - DJANGO_ENV_DEBUG=1
+      - DJANGO_ENV_SECRET_KEY=210d8a97d657f0ca31c08aaf9b31b18054c4b704d2a989c86ee0807b96c8d7c0
+      - DJANGO_ENV_DATABASE_HOST=postgres
+      - DJANGO_ENV_DATABASE_PORT=5432
+      - DJANGO_ENV_DATABASE_NAME=djangocms
+      - DJANGO_ENV_DATABASE_USER=cmsuser
+      - DJANGO_ENV_DATABASE_PASSWORD=mysecretpasswd
+      - DJANGO_ENV_MEDIA_URL=http://localhost:8000/media/
+      - DJANGO_ENV_STATIC_URL=http://localhost:8000/static/
+      - DJANGO_ENV_BACKUP_HTTP_AUTH_USERNAME=131f49bf4cd6c7c8
+      - DJANGO_ENV_BACKUP_HTTP_AUTH_PASSWORD=c9eee0dbcb23f889f96cbfc7bdcf9a61
+
+  postgres:
+    #image: postgres:14
+    build:
+      dockerfile: local_development/Dockerfile.postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      # copy the sql script to create CMS database and user
+      #- ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres_data:
