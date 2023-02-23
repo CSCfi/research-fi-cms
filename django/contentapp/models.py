@@ -30,6 +30,8 @@ class Locations(models.TextChoices):
     SITEMAP = "/sitemap", "Sivukartta"
     ACCESSIBILITY = "/accessibility", "Saavutettavuus"
     PRIVACY = "/privacy", "Tietosuoja"
+    FUNDINGCALLINSTRUCTIONS = "https://wiki.eduuni.fi/x/FJNCAg", "Ohje rahoitushakujen toimittamiseen"
+    OPENSCIENCEINDICATORS = "/science-innovation-policy/open-science-and-research-indicators", "Avoimen tieteen ja tutkimuksen seuranta"
 
 
 class Page(models.Model):
