@@ -30,6 +30,7 @@ class Locations(models.TextChoices):
     SITEMAP = "/sitemap", "Sivukartta"
     ACCESSIBILITY = "/accessibility", "Saavutettavuus"
     PRIVACY = "/privacy", "Tietosuoja"
+    FUNDINGCALLINSTRUCTIONS = "https://wiki.eduuni.fi/x/FJNCAg", "Ohje rahoitushakujen toimittamiseen"
 
 
 class Page(models.Model):
