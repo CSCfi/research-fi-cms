@@ -16,6 +16,6 @@ router.register(r"pages", PageViewSet)
 router.register(r"shortcuts", ShortcutViewSet)
 router.register(r"figures", FigureViewSet)
 router.register(r"sectors", SectorViewSet)
-router.register(r"external_links", ExternalLinkViewSet)
+router.register(r"external_links", ExternalLinkViewSet, basename="external_links")
 # router.register(r"mydata", MyDataViewSet)
 urlpatterns = router.urls
