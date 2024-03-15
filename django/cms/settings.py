@@ -127,7 +127,7 @@ DATABASES = {
     # },
     ### PostgreSQL
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "HOST": os.environ.get("DJANGO_ENV_DATABASE_HOST"),
         "PORT": os.environ.get("DJANGO_ENV_DATABASE_PORT"),
         "NAME": os.environ.get("DJANGO_ENV_DATABASE_NAME"),
@@ -168,7 +168,6 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_L10N = True
 
 USE_TZ = True
 
