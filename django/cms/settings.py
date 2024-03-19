@@ -93,6 +93,13 @@ CORS_ALLOWED_ORIGINS = [
     "https://researchfi-mydata.rahtiapp.fi",
     "https://researchfi-mydata-en.rahtiapp.fi",
     "https://researchfi-mydata-sv.rahtiapp.fi",
+    "https://cms-django-devel-researchfi.rahtiapp.fi",
+    "https://cms-django-production-researchfi.rahtiapp.fi",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://cms-django-devel-researchfi.rahtiapp.fi",
+    "https://cms-django-production-researchfi.rahtiapp.fi",
 ]
 
 ROOT_URLCONF = "cms.urls"
