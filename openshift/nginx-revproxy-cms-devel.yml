@@ -1,9 +1,9 @@
-# Copyright 2023 Ministry of Education and Culture, Finland
+# Copyright 2024 Ministry of Education and Culture, Finland
 #
 # :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
 # :license: MIT
 
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
   labels:

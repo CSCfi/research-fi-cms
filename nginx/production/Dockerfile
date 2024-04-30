@@ -4,6 +4,6 @@
 # :license: MIT
 
 # Use non-root version of nginx
-FROM docker-registry.default.svc:5000/researchfi/nginx-unprivileged
+FROM image-registry.apps.2.rahti.csc.fi/researchfi-production/nginx-unprivileged:latest
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 8080
