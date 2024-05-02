@@ -96,15 +96,15 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.forskning.fi",
     "https://www.research.fi",
     "https://cms-django-devel-researchfi.rahtiapp.fi",
-    "https://cms-django-production-researchfi.rahtiapp.fi",
     "https://cms-django-devel-researchfi.2.rahtiapp.fi",
+    "https://cms-django-production-researchfi.rahtiapp.fi",
     "https://cms-django-production-researchfi.2.rahtiapp.fi",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://cms-django-devel-researchfi.rahtiapp.fi",
-    "https://cms-django-production-researchfi.rahtiapp.fi",
     "https://cms-django-devel-researchfi.2.rahtiapp.fi",
+    "https://cms-django-production-researchfi.rahtiapp.fi",
     "https://cms-django-production-researchfi.2.rahtiapp.fi",
 ]
 
