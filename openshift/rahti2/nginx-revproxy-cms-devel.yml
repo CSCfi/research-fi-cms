@@ -96,7 +96,8 @@ objects:
       app: nginx-revproxy-cms-devel
   spec:
     selector:
-      app: nginx-revproxy-cms-devel
+      matchLabels:
+        app: nginx-revproxy-cms-devel
     template:
       metadata:
         labels:

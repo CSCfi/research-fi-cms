@@ -96,7 +96,8 @@ objects:
       app: nginx-revproxy-cms-production-admin
   spec:
     selector:
-      app: nginx-revproxy-cms-production-admin
+      matchLabels:
+        app: nginx-revproxy-cms-production-admin
     template:
       metadata:
         labels:
@@ -104,7 +105,7 @@ objects:
       spec:
         containers:
           - name: nginx-revproxy-cms-production-admin
-            image: image-registry.openshift-image-registry.svc:5000/researchfi-devel/nginx-revproxy-cms-production-admin:latest
+            image: image-registry.openshift-image-registry.svc:5000/researchfi-production/nginx-revproxy-cms-production-admin:latest
             imagePullPolicy: Always
             ports:
               - containerPort: 8080

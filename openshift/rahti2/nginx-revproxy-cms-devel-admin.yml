@@ -96,7 +96,8 @@ objects:
       app: nginx-revproxy-cms-devel-admin
   spec:
     selector:
-      app: nginx-revproxy-cms-devel-admin
+      matchLabels:
+        app: nginx-revproxy-cms-devel-admin
     template:
       metadata:
         labels:
