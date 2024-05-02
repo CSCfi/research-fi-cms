@@ -1,0 +1,125 @@
+# Copyright 2024 Ministry of Education and Culture, Finland
+#
+# :author: CSC - IT Center for Science Ltd., Espoo Finland servicedesk@csc.fi
+# :license: MIT
+
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: nginx-revproxy-cms-production
+  annotations:
+    description: "Research.fi CMS Nginx reverse proxy for production"
+    iconClass: icon-nginx
+  labels:
+    app: nginx-revproxy-cms-production
+    template: nginx-revproxy-cms-production
+objects:
+
+# Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+    annotations:
+      description: Nginx reverse proxy for CMS content
+  spec:
+    ports:
+      - name: nginx
+        port: 8080
+        targetPort: 8080
+    selector:
+      app: nginx-revproxy-cms-production
+
+# Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+  spec:
+    host: cms-nginx-production-researchfi.2.rahtiapp.fi
+    to:
+      kind: Service
+      name: nginx-revproxy-cms-production
+      weight: 100
+    port:
+      targetPort: nginx
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+    wildcardPolicy: None
+
+# ImageStream
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+
+# BuildConfig using Docker build strategy
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+  spec:
+    source:
+      git:
+        uri: https://github.com/CSCfi/research-fi-cms.git
+        ref: CSCTTV-3833-rahti2
+      contextDir: nginx/production/rahti2
+    strategy:
+      type: Docker
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx-unprivileged:latest
+        dockerfilePath: Dockerfile
+    output:
+      to:
+        kind: ImageStreamTag
+        name: nginx-revproxy-cms-production:latest
+    successfulBuildsHistoryLimit: 2 
+    failedBuildsHistoryLimit: 2
+
+# Deployment config
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: nginx-revproxy-cms-production
+    labels:
+      app: nginx-revproxy-cms-production
+  spec:
+    selector:
+      matchLabels:
+        app: nginx-revproxy-cms-production
+    template:
+      metadata:
+        labels:
+          app: nginx-revproxy-cms-production
+      spec:
+        containers:
+          - name: nginx-revproxy-cms-production
+            image: image-registry.openshift-image-registry.svc:5000/researchfi-production/nginx-revproxy-cms-production:latest
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+    replicas: 1
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - nginx-revproxy-cms-production
+        from:
+          kind: ImageStreamTag
+          name: nginx-revproxy-cms-production:latest
+    strategy:
+      type: RollingUpdate
