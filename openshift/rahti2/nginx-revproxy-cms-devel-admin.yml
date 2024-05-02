@@ -30,7 +30,7 @@ objects:
         port: 8080
         targetPort: 8080
     selector:
-      depcfg: nginx-revproxy-cms-devel-admin
+      app: nginx-revproxy-cms-devel-admin
 
 # Route
 - apiVersion: route.openshift.io/v1
