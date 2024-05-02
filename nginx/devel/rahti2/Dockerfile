@@ -4,6 +4,6 @@
 # :license: MIT
 
 # Use non-root version of nginx
-FROM image-registry.openshift-image-registry.svc:5000/researchfi-production/nginx-unprivileged:latest
+FROM image-registry.openshift-image-registry.svc:5000/researchfi-devel/nginx-unprivileged:latest
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 8080
