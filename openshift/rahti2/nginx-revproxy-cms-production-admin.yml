@@ -71,7 +71,7 @@ objects:
     source:
       git:
         uri: https://github.com/CSCfi/research-fi-cms.git
-        ref: CSCTTV-3833-rahti2
+        ref: devel
       contextDir: nginx/production_admin/rahti2
     strategy:
       type: Docker
