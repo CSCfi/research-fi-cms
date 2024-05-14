@@ -110,6 +110,13 @@ objects:
             ports:
               - containerPort: 8080
                 protocol: TCP
+            resources:
+              limits:
+                cpu: 250m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
     replicas: 1
     triggers:
     - type: ConfigChange
