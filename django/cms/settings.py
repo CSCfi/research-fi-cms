@@ -75,6 +75,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:8080",
     "https://localhost:5003",
+    "https://localhost.localdomain:5003",
     "https://researchfi-test.rahtiapp.fi",
     "https://researchfi-test-en.rahtiapp.fi",
     "https://researchfi-test-sv.rahtiapp.fi",
