@@ -33,7 +33,7 @@ class Locations(models.TextChoices):
     FUNDINGCALLINSTRUCTIONS = "https://wiki.eduuni.fi/x/FJNCAg", "Ohje rahoitushakujen toimittamiseen"
     OPENSCIENCEINDICATORS = "/science-innovation-policy/open-science-and-research-indicators", "Avoimen tieteen ja tutkimuksen seuranta"
     RESEARCHERSPROFILETOOL = "/mydata", "Tutkijan tiedot"
-    ACADEMYFUNDINGCALLSLIFT = "/results/funding-calls?organization=0245893-9&date=2024-11-13|2025-01-08&sort=callDueDesc&search=&typeOfFundingId=2&typeOfFundingId=4&page=1", "Suomen akatemia talvihaku 2024"
+    ACADEMYFUNDINGCALLSLIFT = "/results/funding-calls?organization=0245893-9&date=2024-11-13|2025-01-08&sort=callDueDesc&search=&typeOfFundingId=2&typeOfFundingId=4&page=1", "Suomen akatemia talvihaku 2025"
 
 
 class Page(models.Model):
