@@ -43,9 +43,10 @@
           <a class="nav-link" href="/mydata/">MyData</a>
         </li>
       </ul>
-      <a href="/accounts/logout">
+      <form method="post" action="{% url 'logout' %}" class="mb-0">
+        {% csrf_token %}
         <button class="btn btn-secondary" type="submit">Log out</button>
-      </a>
+      </form>
     </div>
     {% endif %}
   </nav>
